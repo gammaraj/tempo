@@ -100,45 +100,20 @@ export default function HomePage() {
               }}
             >
               <div className="flex items-center">
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 border border-white/20">
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm border border-white/20">
                   <svg
-                    width="20"
-                    height="20"
+                    width="22"
+                    height="22"
                     viewBox="0 0 32 32"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M12 14 C10 14, 9 15, 9 16.5 C9 17, 9.2 17.5, 9.5 18 C9.2 18.5, 9 19, 9 19.5 C9 21, 10 22, 11.5 22 L20.5 22 C22 22, 23 21, 23 19.5 C23 19, 22.8 18.5, 22.5 18 C22.8 17.5, 23 17, 23 16.5 C23 15, 22 14, 20.5 14 L19 14 C19 14, 18.5 14.2, 18 14.5 L16 14.5 C15.5 14.2, 15 14, 15 14 L12 14 Z"
-                      stroke="white"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M14 16.5 C14.5 16.8, 15 17, 15.5 17 C16 17, 16.5 16.8, 17 16.5"
-                      stroke="white"
-                      strokeWidth="1"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M14 14V10C14 7.79 15.79 6 18 6H18C20.21 6 22 7.79 22 10V14"
-                      stroke="white"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                    <circle
-                      cx="16"
-                      cy="16"
-                      r="14"
-                      stroke="white"
-                      strokeWidth="1"
-                      fill="none"
-                      opacity="0.3"
-                    />
+                    {/* Timer ring */}
+                    <circle cx="16" cy="16" r="13" stroke="white" strokeWidth="2.5" strokeOpacity="0.3" fill="none"/>
+                    {/* Progress arc ~ 75% */}
+                    <circle cx="16" cy="16" r="13" stroke="white" strokeWidth="2.5" fill="none" strokeDasharray="81.7" strokeDashoffset="20.4" strokeLinecap="round" transform="rotate(-90 16 16)"/>
+                    {/* Lightning bolt */}
+                    <path d="M18 6L12 17h5l-2 10 8-13h-6l3-8z" fill="white"/>
                   </svg>
                 </div>
                 <h1 className="text-xl font-bold ml-3">Tempo</h1>

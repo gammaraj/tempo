@@ -36,7 +36,13 @@ export const metadata: Metadata = {
   creator: "Tempo",
   metadataBase: new URL(siteUrl),
   alternates: { canonical: "/" },
-  icons: { icon: "/favicon.ico" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/logo.svg",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
