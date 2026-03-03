@@ -1,0 +1,41 @@
+# Tempo – Focus Timer & Pomodoro Productivity App
+
+> Tempo is a free, open-source Pomodoro-style focus timer web app built with Next.js, React, and Tailwind CSS. It helps users stay productive through customizable work-break cycles, task management, daily session goals, and motivational quotes.
+
+## Features
+
+- **Circular Timer**: A visual countdown timer with smooth animations for work and break sessions.
+- **Customizable Durations**: Set your own work duration, break duration, and inactivity threshold.
+- **Task Tracking**: Create, start, complete, and delete tasks. Track sessions and time spent per task.
+- **Daily Goals & Streaks**: Set a daily session goal and track your streak of consecutive productive days.
+- **Auto-Start**: Optionally auto-start the next session when a break ends.
+- **Notifications**: Browser notifications when a session or break completes.
+- **Motivational Quotes**: Rotating inspirational quotes displayed during sessions.
+- **Dark Mode**: Supports light and dark themes via system preference.
+- **Local Storage Persistence**: All data (settings, tasks, progress, streaks) persists in the browser.
+
+## Tech Stack
+
+- Next.js (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Local Storage for data persistence
+
+## Architecture
+
+- `src/app/layout.tsx` – Root layout with SEO metadata.
+- `src/app/page.tsx` – Main single-page app with timer, controls, tasks, and settings.
+- `src/components/CircularTimer.tsx` – SVG-based circular countdown display.
+- `src/components/TimerControls.tsx` – Start, pause, and reset buttons.
+- `src/components/DailyProgress.tsx` – Daily goal progress bar and streak display.
+- `src/components/SettingsPanel.tsx` – Settings modal for durations, goals, notifications.
+- `src/components/TaskList.tsx` – Task creation, listing, and time tracking.
+- `src/hooks/useTimer.ts` – Core timer logic hook (work/break cycles, callbacks).
+- `src/lib/types.ts` – TypeScript type definitions (Settings, Task, TimerStatus, etc.).
+- `src/lib/quotes.ts` – Array of motivational quotes.
+- `src/lib/storage/` – Local storage utilities for tasks, settings, and daily progress.
+
+## URL
+
+- Homepage: https://usetempo.app

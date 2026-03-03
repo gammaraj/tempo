@@ -1,13 +1,100 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl = "https://usetempo.app";
+const title = "Tempo – Focus Timer & Pomodoro Productivity App";
+const description =
+  "Tempo is a free online Pomodoro focus timer that helps you stay productive with customizable work-break cycles, daily session goals, task tracking, streak stats, and motivational quotes.";
+
 export const metadata: Metadata = {
-  title: "Tempo - Focus Timer",
-  description:
-    "A productivity timer app that helps you stay focused and maintain healthy work-break cycles.",
-  icons: {
-    icon: "/favicon.ico",
+  title,
+  description,
+  keywords: [
+    "pomodoro timer",
+    "focus timer",
+    "productivity app",
+    "work break timer",
+    "task tracker",
+    "daily goals",
+    "streak tracker",
+    "online timer",
+    "time management",
+    "tempo app",
+  ],
+  authors: [{ name: "Tempo" }],
+  creator: "Tempo",
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
+  icons: { icon: "/favicon.ico" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "Tempo",
+    title,
+    description,
   },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Tempo",
+  url: siteUrl,
+  applicationCategory: "Productivity",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  description,
+  featureList: [
+    "Pomodoro focus timer",
+    "Customizable work and break durations",
+    "Task tracking with time logging",
+    "Daily session goals and streak tracking",
+    "Browser notifications",
+    "Motivational quotes",
+    "Dark mode support",
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is Tempo?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Tempo is a free online Pomodoro-style focus timer that helps you stay productive with customizable work-break cycles, task tracking, daily goals, and streak stats.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does the Pomodoro technique work in Tempo?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Set a work duration (e.g. 25 minutes) and a break duration (e.g. 5 minutes). Tempo counts down your work session, then automatically transitions to a break. Track completed sessions toward your daily goal.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is Tempo free to use?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Tempo is completely free with no sign-up required. All data is stored locally in your browser.",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -17,6 +104,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      </head>
       <body className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 dark:from-gray-900 dark:to-gray-950">
         {children}
       </body>
