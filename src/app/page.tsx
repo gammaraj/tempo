@@ -91,7 +91,7 @@ export default function HomePage() {
       <div className="w-full max-w-[960px] flex flex-col lg:flex-row gap-4 sm:gap-5">
         {/* Timer column */}
         <div className="w-full lg:w-[420px] lg:flex-shrink-0">
-          <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-gray-800 overflow-visible relative">
+          <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-gray-800 overflow-visible relative">
             {/* Header */}
             <header
               className="flex items-center justify-between px-5 py-5 text-white rounded-t-2xl"

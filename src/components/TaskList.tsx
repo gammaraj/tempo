@@ -212,7 +212,7 @@ export default function TaskList({
   const currentProject = projects.find((p) => p.id === selectedProjectId);
 
   return (
-    <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-gray-800 overflow-visible">
+    <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-gray-800 overflow-visible">
       {/* Header */}
       <div
         className="px-4 sm:px-5 py-4 text-white rounded-t-2xl"
