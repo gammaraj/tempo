@@ -39,10 +39,10 @@ export default function DailyProgress({
   };
 
   return (
-    <section className="px-3 py-2" aria-labelledby="daily-progress-heading">
+    <section className="px-4 py-2" aria-labelledby="daily-progress-heading">
       <div
         id="dailyGoalProgress"
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-4"
+        className="bg-gradient-to-br from-white to-slate-50/80 dark:from-gray-800 dark:to-gray-800 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-700 p-4"
       >
         {/* Sessions counter */}
         <div className="flex items-center justify-between mb-4">
@@ -67,7 +67,7 @@ export default function DailyProgress({
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-1 font-medium">
               Streak
             </div>
-            <div className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg text-sm font-bold border border-slate-200 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+            <div className="bg-gradient-to-r from-slate-50 to-blue-50/50 dark:bg-slate-800 dark:from-transparent dark:to-transparent text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg text-sm font-bold border border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
               🔥 {dailyGoalData.streak} days
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function DailyProgress({
 
         {/* Progress bar */}
         <div
-          className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-3 border border-gray-300 dark:border-gray-600"
+          className="w-full bg-slate-100 dark:bg-gray-700 rounded-full h-3 mb-3 border border-slate-200/80 dark:border-gray-600 overflow-hidden"
           role="progressbar"
           aria-valuenow={progressPercent}
           aria-valuemin={0}
@@ -83,7 +83,7 @@ export default function DailyProgress({
         >
           <div
             className={`h-full rounded-full transition-all duration-500 ${
-              goalMet ? "bg-green-500" : "bg-blue-500"
+              goalMet ? "bg-gradient-to-r from-green-400 to-emerald-500" : "bg-gradient-to-r from-blue-400 to-blue-600"
             }`}
             style={{ width: `${progressPercent}%` }}
           />
@@ -198,7 +198,7 @@ function CalendarView({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h3 className="text-sm font-bold text-gray-700 dark:text-gray-200">
+        <h3 className="text-base font-bold text-gray-700 dark:text-gray-200">
           {MONTH_NAMES[month]} {year}
         </h3>
         <button
@@ -244,7 +244,7 @@ function CalendarView({
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-center gap-4 mt-3 text-xs text-gray-500 dark:text-gray-400">
+      <div className="flex items-center justify-center gap-4 mt-3 text-sm text-gray-500 dark:text-gray-400">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-green-500" />
           <span>Goal met</span>

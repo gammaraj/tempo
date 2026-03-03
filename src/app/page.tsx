@@ -87,16 +87,16 @@ export default function HomePage() {
   }, [timer]);
 
   return (
-    <div className="flex items-start justify-center min-h-screen p-4 pt-6">
-      <div className="w-full max-w-[960px] flex flex-col lg:flex-row gap-4">
+    <div className="flex items-start justify-center min-h-screen p-4 pt-8">
+      <div className="w-full max-w-[960px] flex flex-col lg:flex-row gap-5">
         {/* Timer column */}
         <div className="w-full lg:w-[420px] flex-shrink-0">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-white/20 dark:border-gray-800 overflow-visible relative">
+          <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-gray-800 overflow-visible relative">
             {/* Header */}
             <header
-              className="flex items-center justify-between px-4 py-5 text-white rounded-t-2xl"
+              className="flex items-center justify-between px-5 py-5 text-white rounded-t-2xl"
               style={{
-                background: "#1e293b",
+                background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
               }}
             >
               <div className="flex items-center">
@@ -184,7 +184,7 @@ export default function HomePage() {
             )}
 
             {/* Main content */}
-            <div className="bg-white dark:bg-gray-900 p-3">
+            <div className="bg-white/60 dark:bg-gray-900 backdrop-blur-sm p-4">
               <CircularTimer
                 remainingTime={timer.remainingTime}
                 totalDuration={
@@ -210,9 +210,9 @@ export default function HomePage() {
             </div>
 
             {timer.lastQuote && (
-              <div className="px-4 pb-2">
-                <div className="bg-slate-50 dark:bg-slate-800/40 rounded-lg p-3 border border-slate-200 dark:border-slate-700 text-center">
-                  <p className="text-xs italic text-slate-500 dark:text-slate-400">
+              <div className="px-4 pb-3">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:bg-slate-800/40 dark:from-transparent dark:to-transparent rounded-xl p-3.5 border border-blue-100/80 dark:border-slate-700 text-center">
+                  <p className="text-sm italic text-slate-600 dark:text-slate-400 leading-relaxed">
                     &ldquo;{timer.lastQuote}&rdquo;
                   </p>
                 </div>
@@ -275,9 +275,9 @@ function ActiveTaskBanner({
   if (!title) return null;
 
   return (
-    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-2">
+    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-2.5">
       <div className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
-      <span className="text-xs font-medium text-blue-700 dark:text-blue-300 truncate flex-1">
+      <span className="text-sm font-medium text-blue-700 dark:text-blue-300 truncate flex-1">
         {title}
       </span>
       {!isRunning && (
@@ -286,7 +286,7 @@ function ActiveTaskBanner({
           className="text-blue-400 hover:text-blue-600 transition-colors flex-shrink-0"
           aria-label="Clear active task"
         >
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>

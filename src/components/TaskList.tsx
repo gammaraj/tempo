@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Task, Project, DEFAULT_PROJECT, DEFAULT_PROJECT_ID } from "@/lib/types";
 import { loadTasks, saveTasks, loadProjects, saveProjects, loadSelectedProjectId, saveSelectedProjectId } from "@/lib/storage";
+import { TASK_TEMPLATES, templateToTasks } from "@/lib/templates";
 
 function formatDuration(ms: number): string {
   const totalMin = Math.floor(ms / 60000);
@@ -39,13 +40,18 @@ export default function TaskList({
   const [newProjectName, setNewProjectName] = useState("");
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [editProjectName, setEditProjectName] = useState("");
+  const [showTemplateMenu, setShowTemplateMenu] = useState(false);
   const projectMenuRef = useRef<HTMLDivElement>(null);
+  const templateMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close project menu on outside click
+  // Close project/template menus on outside click
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (projectMenuRef.current && !projectMenuRef.current.contains(e.target as Node)) {
         setShowProjectMenu(false);
+      }
+      if (templateMenuRef.current && !templateMenuRef.current.contains(e.target as Node)) {
+        setShowTemplateMenu(false);
       }
     };
     document.addEventListener("mousedown", handleClick);
@@ -206,11 +212,11 @@ export default function TaskList({
   const currentProject = projects.find((p) => p.id === selectedProjectId);
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-white/20 dark:border-gray-800 overflow-visible">
+    <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-gray-800 overflow-visible">
       {/* Header */}
       <div
-        className="px-4 py-4 text-white"
-        style={{ background: "#1e293b" }}
+        className="px-5 py-4 text-white rounded-t-2xl"
+        style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" }}
       >
         <h2 className="text-lg font-bold flex items-center gap-2">
           <svg
@@ -331,12 +337,12 @@ export default function TaskList({
                   value={newProjectName}
                   onChange={(e) => setNewProjectName(e.target.value)}
                   placeholder="New project..."
-                  className="flex-1 px-2 py-1 text-xs border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-gray-700 dark:text-white outline-none focus:border-blue-400"
+                  className="flex-1 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-gray-700 dark:text-white outline-none focus:border-blue-400"
                 />
                 <button
                   type="submit"
                   disabled={!newProjectName.trim()}
-                  className="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="px-2.5 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
                   Add
                 </button>
@@ -349,12 +355,13 @@ export default function TaskList({
 
       <div className="p-4 space-y-3">
         {/* Add task input */}
+        <div className="flex gap-2">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             addTask();
           }}
-          className="flex gap-2"
+          className="flex gap-2 flex-1"
         >
           <input
             type="text"
@@ -372,27 +379,89 @@ export default function TaskList({
           </button>
         </form>
 
-        {/* Pending tasks */}
+        {/* Template button */}
+        <div className="relative" ref={templateMenuRef}>
+          <button
+            type="button"
+            onClick={() => setShowTemplateMenu(!showTemplateMenu)}
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-purple-200 dark:border-purple-700 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-800/40 transition-colors"
+            title="Load task template"
+          >
+            📋 <span>Templates</span>
+          </button>
+          {showTemplateMenu && (
+            <div className="absolute right-0 top-full mt-1 w-64 bg-white dark:bg-gray-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50">
+              <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 rounded-t-lg">
+                <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Task Templates</span>
+              </div>
+              <div className="max-h-[400px] overflow-y-auto rounded-b-lg">
+                {TASK_TEMPLATES.map((tpl) => (
+                  <button
+                    key={tpl.label}
+                    type="button"
+                    onClick={() => {
+                      const newTasks = templateToTasks(tpl, selectedProjectId);
+                      persist([...tasks, ...newTasks]);
+                      setShowTemplateMenu(false);
+                    }}
+                    className="w-full text-left px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors border-b border-slate-50 dark:border-slate-700/50 last:border-b-0"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-base">{tpl.emoji}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{tpl.label}</div>
+                        <div className="text-xs text-slate-400 dark:text-slate-500">{tpl.description} · {tpl.tasks.length} tasks</div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        </div>
+
+        {/* Empty state with template gallery */}
         {pendingTasks.length === 0 && completedTasks.length === 0 && (
-          <div className="text-center py-8 text-slate-400 dark:text-slate-500 text-sm">
-            No tasks yet. Add one to get started.
+          <div className="py-4">
+            <div className="text-center mb-4">
+              <p className="text-slate-500 dark:text-slate-400 text-base mb-1">No tasks yet</p>
+              <p className="text-slate-400 dark:text-slate-500 text-sm">Add a task above or pick a template to get started</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {TASK_TEMPLATES.map((tpl) => (
+                <button
+                  key={tpl.label}
+                  type="button"
+                  onClick={() => {
+                    const newTasks = templateToTasks(tpl, selectedProjectId);
+                    persist([...tasks, ...newTasks]);
+                  }}
+                  className="text-left p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 transition-all group"
+                >
+                  <div className="text-xl mb-1">{tpl.emoji}</div>
+                  <div className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">{tpl.label}</div>
+                  <div className="text-sm text-slate-400 dark:text-slate-500">{tpl.tasks.length} tasks</div>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           {pendingTasks.map((task) => (
             <div
               key={task.id}
-              className={`group flex items-center gap-2 p-2.5 rounded-lg border transition-colors ${
+              className={`group flex items-center gap-3 p-3.5 rounded-xl border transition-colors ${
                 activeTaskId === task.id
                   ? "border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20"
-                  : "border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                  : "border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50"
               }`}
             >
               {/* Checkbox */}
               <button
                 onClick={() => toggleComplete(task.id)}
-                className="flex-shrink-0 w-5 h-5 rounded border-2 border-slate-300 dark:border-slate-600 hover:border-blue-500 transition-colors flex items-center justify-center"
+                className="flex-shrink-0 w-[22px] h-[22px] rounded-md border-2 border-slate-300 dark:border-slate-600 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center justify-center"
                 aria-label={`Mark "${task.title}" complete`}
               />
 
@@ -408,19 +477,19 @@ export default function TaskList({
                       if (e.key === "Enter") saveEdit(task.id);
                       if (e.key === "Escape") setEditingId(null);
                     }}
-                    className="w-full px-1 py-0.5 text-sm border border-blue-300 rounded bg-white dark:bg-gray-800 dark:text-white outline-none"
+                    className="w-full px-2 py-1 text-[15px] border border-blue-300 rounded-lg bg-white dark:bg-gray-800 dark:text-white outline-none"
                     autoFocus
                   />
                 ) : (
                   <div
-                    className="text-sm text-slate-700 dark:text-slate-200 truncate cursor-pointer"
+                    className="text-[15px] font-medium text-slate-800 dark:text-slate-100 truncate cursor-pointer leading-snug"
                     onDoubleClick={() => startEditing(task)}
                   >
                     {task.title}
                   </div>
                 )}
                 {(task.sessions > 0 || (task.timeSpent || 0) > 0) && (
-                  <div className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     {task.sessions > 0 && (
                       <span>{task.sessions} session{task.sessions !== 1 ? "s" : ""}</span>
                     )}
@@ -442,7 +511,7 @@ export default function TaskList({
                       onStartTask(task.id);
                     }
                   }}
-                  className={`flex-shrink-0 px-2.5 py-1 text-xs font-medium rounded transition-colors flex items-center gap-1 ${
+                  className={`flex-shrink-0 px-2.5 py-1 text-sm font-medium rounded transition-colors flex items-center gap-1 ${
                     activeTaskId === task.id
                       ? "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300"
                       : "bg-blue-600 text-white hover:bg-blue-700 opacity-0 group-hover:opacity-100"
@@ -466,7 +535,7 @@ export default function TaskList({
                 </button>
               )}
               {isTimerRunning && activeTaskId === task.id && (
-                <span className="flex-shrink-0 px-2 py-1 text-xs font-medium rounded bg-blue-600 text-white flex items-center gap-1">
+                <span className="flex-shrink-0 px-2 py-1 text-sm font-medium rounded bg-blue-600 text-white flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   In progress
                 </span>
@@ -502,12 +571,12 @@ export default function TaskList({
         {completedTasks.length > 0 && (
           <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">
+              <span className="text-sm font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">
                 Completed ({completedTasks.length})
               </span>
               <button
                 onClick={clearCompleted}
-                className="text-xs text-slate-400 hover:text-red-500 transition-colors"
+                className="text-sm text-slate-400 hover:text-red-500 transition-colors"
               >
                 Clear
               </button>
