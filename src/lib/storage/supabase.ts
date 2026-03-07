@@ -41,7 +41,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       .from("settings")
       .select("*")
       .eq("user_id", userId)
-      .single();
+      .maybeSingle();
 
     if (!data) return DEFAULT_SETTINGS;
 
@@ -77,7 +77,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       .from("daily_goal_data")
       .select("*")
       .eq("user_id", userId)
-      .single();
+      .maybeSingle();
 
     const today = getToday();
 
@@ -275,13 +275,12 @@ export class SupabaseStorageAdapter implements StorageAdapter {
 
   async loadSelectedProjectId(): Promise<string> {
     const userId = await this.getUserId();
-    const { data, error } = await this.supabase
+    const { data } = await this.supabase
       .from("user_preferences")
       .select("selected_project_id")
       .eq("user_id", userId)
-      .single();
+      .maybeSingle();
 
-    if (error) return DEFAULT_PROJECT.id;
     return data?.selected_project_id ?? DEFAULT_PROJECT.id;
   }
 

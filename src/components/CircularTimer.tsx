@@ -19,34 +19,46 @@ export default function CircularTimer({
   displayTime,
   isBreak,
 }: CircularTimerProps) {
-  const circumference = 315;
+  const circumference = 2 * Math.PI * 45;
   const progress = totalDuration > 0 ? (totalDuration - remainingTime) / totalDuration : 0;
   const offset = circumference - progress * circumference;
 
   return (
-    <div className="circular-timer-container my-2">
-      <div className="circular-timer">
-        <svg className="timer-svg" viewBox="0 0 100 100">
-          {/* Inner background circle */}
-          <circle
-            className={`timer-inner-bg ${isBreak ? "break" : ""}`}
-            cx="50"
-            cy="50"
-            r="42"
-          />
-          {/* Background circle */}
-          <circle className="timer-circle-bg" cx="50" cy="50" r="45" />
-          {/* Progress circle */}
-          <circle
-            className={`timer-circle-progress ${isBreak ? "break" : ""}`}
-            cx="50"
-            cy="50"
-            r="45"
-            style={{ strokeDashoffset: offset }}
-          />
-        </svg>
+    <div className="relative mx-auto my-2" style={{ width: 'min(280px, 70vw)', height: 'min(280px, 70vw)' }}>
+      {/* SVG ring */}
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 100 100"
+        style={{ transform: 'rotate(-90deg)' }}
+      >
+        <circle
+          cx="50" cy="50" r="42"
+          fill={isBreak ? "rgba(5,150,105,0.06)" : "rgba(37,99,235,0.06)"}
+          stroke="none"
+        />
+        <circle
+          cx="50" cy="50" r="45"
+          fill="none"
+          className="stroke-slate-200 dark:stroke-slate-600"
+          strokeWidth="3"
+          opacity="0.8"
+        />
+        <circle
+          cx="50" cy="50" r="45"
+          fill="none"
+          stroke={isBreak ? "var(--success-green)" : "var(--primary-blue)"}
+          strokeWidth="3.5"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          className="transition-all duration-300"
+        />
+      </svg>
+
+      {/* Center text overlay */}
+      <div className="absolute inset-0 flex items-center justify-center">
         <div
-          className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center rounded-full flex flex-col items-center justify-center backdrop-blur-sm bg-white/95 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-600 shadow-md"
+          className="rounded-full flex flex-col items-center justify-center text-center bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-600 shadow-lg"
           style={{ width: 'min(200px, 50vw)', height: 'min(200px, 50vw)' }}
         >
           <div className="text-base font-bold mb-1 text-gray-700 dark:text-gray-200">
