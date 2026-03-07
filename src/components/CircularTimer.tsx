@@ -46,7 +46,7 @@ export default function CircularTimer({
           />
         </svg>
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center rounded-full flex flex-col items-center justify-center backdrop-blur-sm bg-white/95 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-600 shadow-md"
+          className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center rounded-full flex flex-col items-center justify-center backdrop-blur-sm bg-white/95 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-600 shadow-md"
           style={{ width: 'min(200px, 50vw)', height: 'min(200px, 50vw)' }}
         >
           <div className="text-base font-bold mb-1 text-gray-700 dark:text-gray-200">

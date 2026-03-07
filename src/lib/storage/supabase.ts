@@ -275,12 +275,13 @@ export class SupabaseStorageAdapter implements StorageAdapter {
 
   async loadSelectedProjectId(): Promise<string> {
     const userId = await this.getUserId();
-    const { data } = await this.supabase
+    const { data, error } = await this.supabase
       .from("user_preferences")
       .select("selected_project_id")
       .eq("user_id", userId)
       .single();
 
+    if (error) return DEFAULT_PROJECT.id;
     return data?.selected_project_id ?? DEFAULT_PROJECT.id;
   }
 
