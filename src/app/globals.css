@@ -46,6 +46,12 @@ body {
   opacity: 0.8;
 }
 
+@media (prefers-color-scheme: dark) {
+  .timer-circle-bg {
+    stroke: #475569;
+  }
+}
+
 .timer-inner-bg {
   fill: rgba(37, 99, 235, 0.04);
   stroke: none;
@@ -89,6 +95,15 @@ body {
   justify-content: center;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+  .timer-inner-bg {
+    fill: rgba(37, 99, 235, 0.08);
+  }
+  .timer-inner-bg.break {
+    fill: rgba(5, 150, 105, 0.08);
+  }
 }
 
 /* ===== Timer Control Buttons ===== */
@@ -256,8 +271,9 @@ input:focus-visible {
 /* ===== Dark Mode ===== */
 @media (prefers-color-scheme: dark) {
   .timer-content {
-    background: rgba(30, 30, 30, 0.98);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.95);
+    border-color: rgba(100, 116, 139, 0.3);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 116, 139, 0.15);
   }
 
   .pause-button {

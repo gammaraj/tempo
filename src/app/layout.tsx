@@ -139,7 +139,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-indigo-50 dark:from-gray-900 dark:to-gray-950">
+      <body className="min-h-screen bg-slate-50 dark:bg-[#0a0f1a]">
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

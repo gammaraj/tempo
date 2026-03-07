@@ -44,7 +44,7 @@ export default function AuthForm() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}`,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
   };
@@ -65,7 +65,7 @@ export default function AuthForm() {
         <button
           type="button"
           onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 text-[15px] font-medium hover:bg-neutral-50 dark:hover:bg-neutral-750 transition-colors"
+          className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white text-[15px] font-medium hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors"
         >
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
