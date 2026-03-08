@@ -51,7 +51,6 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", sizes: "32x32" },
       { url: "/favicon.svg", type: "image/svg+xml" },
     ],
-    apple: "/logo.svg",
   },
   manifest: "/manifest.json",
   openGraph: {
@@ -61,20 +60,11 @@ export const metadata: Metadata = {
     siteName: "Tempo",
     title,
     description,
-    images: [
-      {
-        url: "/logo.svg",
-        width: 512,
-        height: 512,
-        alt: "Tempo – Focus Timer & Pomodoro Productivity App",
-      },
-    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title,
     description,
-    images: ["/logo.svg"],
   },
   category: "productivity",
   robots: {
@@ -94,8 +84,8 @@ const jsonLd = {
   browserRequirements: "Requires a modern web browser with JavaScript enabled",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   description,
-  image: `${siteUrl}/logo.svg`,
-  screenshot: `${siteUrl}/logo.svg`,
+  image: `${siteUrl}/opengraph-image`,
+  screenshot: `${siteUrl}/opengraph-image`,
   featureList: [
     "Pomodoro focus timer",
     "Customizable work and break durations",
@@ -107,7 +97,6 @@ const jsonLd = {
     "Cloud sync with Supabase",
     "Works offline",
   ],
-  aggregateRating: undefined,
 };
 
 const howToJsonLd = {
@@ -231,7 +220,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-
+        <link rel="help" href="/llms.txt" type="text/plain" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

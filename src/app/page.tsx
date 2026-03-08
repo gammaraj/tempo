@@ -56,35 +56,48 @@ export default function LandingPage() {
         </div>
 
         {/* Features */}
-        <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl w-full">
-          <div className="text-center">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
-              <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+        <section className="mt-20 max-w-2xl w-full">
+          <h2 className="text-xl font-bold text-neutral-900 dark:text-white text-center mb-6">
+            Everything you need to stay focused
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+            <div className="text-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">Focus Timer</h3>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Customizable work &amp; break cycles</p>
             </div>
-            <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">Focus Timer</h3>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Customizable work &amp; break cycles</p>
-          </div>
-          <div className="text-center">
-            <div className="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-3">
-              <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-              </svg>
+            <div className="text-center">
+              <div className="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+              </div>
+              <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">Task Tracking</h3>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Organize tasks with time logging</p>
             </div>
-            <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">Task Tracking</h3>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Organize tasks with time logging</p>
-          </div>
-          <div className="text-center">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mx-auto mb-3">
-              <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-              </svg>
+            <div className="text-center">
+              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                </svg>
+              </div>
+              <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">Daily Streaks</h3>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Set goals &amp; build consistency</p>
             </div>
-            <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">Daily Streaks</h3>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">Set goals &amp; build consistency</p>
           </div>
-        </div>
+        </section>
+
+        <section className="mt-12 max-w-lg w-full">
+          <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center leading-relaxed">
+            Based on the Pomodoro technique, Tempo alternates focused work sessions with short breaks
+            to help you maintain concentration and avoid burnout. Set your timer, pick a task, and let
+            Tempo handle the rest — tracking sessions, progress, and streaks automatically.
+          </p>
+        </section>
       </main>
 
       {/* Footer */}
