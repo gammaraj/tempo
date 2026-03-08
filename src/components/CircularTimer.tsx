@@ -40,14 +40,14 @@ export default function CircularTimer({
           cx="50" cy="50" r="45"
           fill="none"
           className="stroke-slate-200 dark:stroke-slate-500"
-          strokeWidth="3"
+          strokeWidth="3.5"
           opacity="0.8"
         />
         <circle
           cx="50" cy="50" r="45"
           fill="none"
           stroke={isBreak ? "var(--success-green)" : "var(--primary-blue)"}
-          strokeWidth="3.5"
+          strokeWidth="4"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           strokeLinecap="round"

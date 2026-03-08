@@ -99,9 +99,9 @@ export default function AppPage() {
 
   return (
     <div className="flex items-start justify-center min-h-screen p-3 pt-4 sm:p-4 sm:pt-8">
-      <div className="w-full max-w-[960px] flex flex-col lg:flex-row gap-4 sm:gap-5">
+      <div className="w-full max-w-[1080px] flex flex-col lg:flex-row gap-4 sm:gap-5">
         {/* Timer column */}
-        <div className="w-full lg:w-[420px] lg:flex-shrink-0">
+        <div className="w-full lg:w-[400px] lg:flex-shrink-0">
           <div className="bg-white/80 dark:bg-[#111827] backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-[#1e3050] overflow-visible relative">
             {/* Header */}
             <header
