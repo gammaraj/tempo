@@ -250,11 +250,11 @@ export default function TaskList({
   const currentProject = projects.find((p) => p.id === selectedProjectId);
 
   return (
-    <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-gray-800 overflow-visible">
+    <div className="bg-white/80 dark:bg-[#111827] backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-[#1e3050] overflow-visible">
       {/* Header */}
       <div
         className="px-4 sm:px-5 py-4 text-white rounded-t-2xl"
-        style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" }}
+        style={{ background: "linear-gradient(135deg, #0f1b33 0%, #1a2d4a 100%)" }}
       >
         <h2 className="text-lg font-bold flex items-center gap-2">
           <svg
@@ -278,7 +278,7 @@ export default function TaskList({
       <div className="px-4 pt-3 pb-1 relative" ref={projectMenuRef}>
         <button
           onClick={() => setShowProjectMenu(!showProjectMenu)}
-          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-100 bg-slate-50 dark:bg-[#131d30] border border-slate-200 dark:border-[#243350] rounded-lg hover:bg-slate-100 dark:hover:bg-[#1a2744] transition-colors"
         >
           <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
@@ -291,15 +291,15 @@ export default function TaskList({
 
         {/* Dropdown */}
         {showProjectMenu && (
-          <div className="absolute left-4 right-4 top-full mt-1 bg-white dark:bg-gray-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 overflow-hidden">
+          <div className="absolute left-4 right-4 top-full mt-1 bg-white dark:bg-[#131d30] border border-slate-200 dark:border-[#243350] rounded-lg shadow-lg z-50 overflow-hidden">
             <div className="max-h-48 overflow-y-auto">
               {projects.map((p) => (
                   <div
                   key={p.id}
                   className={`group/proj flex items-center gap-2 px-3 py-2 text-sm cursor-pointer transition-colors ${
                     p.id === selectedProjectId
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
-                      : "text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
+                      ? "bg-blue-50 dark:bg-blue-900/25 text-blue-700 dark:text-blue-200"
+                      : "text-slate-700 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-[#1a2744]"
                   }`}
                 >
                   {editingProjectId === p.id ? (
@@ -312,7 +312,7 @@ export default function TaskList({
                         if (e.key === "Enter") saveProjectEdit();
                         if (e.key === "Escape") setEditingProjectId(null);
                       }}
-                      className="flex-1 px-1 py-0.5 text-sm border border-blue-300 rounded bg-white dark:bg-gray-800 dark:text-white outline-none"
+                      className="flex-1 px-1 py-0.5 text-sm border border-blue-300 rounded bg-white dark:bg-[#131d30] dark:text-white outline-none"
                       autoFocus
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -362,7 +362,7 @@ export default function TaskList({
             </div>
 
             {/* Add new project */}
-            <div className="border-t border-slate-100 dark:border-slate-700 p-2">
+            <div className="border-t border-slate-100 dark:border-[#243350] p-2">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -375,7 +375,7 @@ export default function TaskList({
                   value={newProjectName}
                   onChange={(e) => setNewProjectName(e.target.value)}
                   placeholder="New project..."
-                  className="flex-1 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-gray-700 dark:text-white outline-none focus:border-blue-400"
+                  className="flex-1 px-2 py-1.5 text-sm border border-slate-200 dark:border-[#2a3f5c] rounded bg-white dark:bg-[#131d30] dark:text-white outline-none focus:border-blue-400"
                 />
                 <button
                   type="submit"
@@ -406,7 +406,7 @@ export default function TaskList({
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
             placeholder={`Add a task to ${currentProject?.name ?? "General"}...`}
-            className="flex-1 px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-gray-800 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-200 outline-none"
+            className="flex-1 px-3 py-2 text-sm border border-slate-200 dark:border-[#243350] rounded-lg bg-white dark:bg-[#131d30] dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-200 outline-none"
           />
           <button
             type="submit"
@@ -422,15 +422,15 @@ export default function TaskList({
           <button
             type="button"
             onClick={() => setShowTemplateMenu(!showTemplateMenu)}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-purple-200 dark:border-purple-700 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-800/40 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-purple-200 dark:border-purple-700 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-200 hover:bg-purple-100 dark:hover:bg-purple-800/40 transition-colors"
             title="Load task template"
           >
             📋 <span className="hidden sm:inline">Templates</span>
           </button>
           {showTemplateMenu && (
-            <div className="absolute right-0 top-full mt-1 w-64 bg-white dark:bg-gray-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50">
-              <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 rounded-t-lg">
-                <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Task Templates</span>
+            <div className="absolute right-0 top-full mt-1 w-64 bg-white dark:bg-[#131d30] border border-slate-200 dark:border-[#243350] rounded-lg shadow-xl z-50">
+              <div className="px-3 py-2 border-b border-slate-100 dark:border-[#243350] rounded-t-lg">
+                <span className="text-sm font-semibold text-slate-500 dark:text-slate-300 uppercase tracking-wide">Task Templates</span>
               </div>
               <div className="max-h-[400px] overflow-y-auto rounded-b-lg">
                 {TASK_TEMPLATES.map((tpl) => (
@@ -442,13 +442,13 @@ export default function TaskList({
                       persist([...tasks, ...newTasks]);
                       setShowTemplateMenu(false);
                     }}
-                    className="w-full text-left px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors border-b border-slate-50 dark:border-slate-700/50 last:border-b-0"
+                    className="w-full text-left px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-[#1a2744] transition-colors border-b border-slate-50 dark:border-[#1e3050]/50 last:border-b-0"
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-base">{tpl.emoji}</span>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-slate-700 dark:text-slate-200">{tpl.label}</div>
-                        <div className="text-xs text-slate-400 dark:text-slate-500">{tpl.description} · {tpl.tasks.length} tasks</div>
+                        <div className="text-xs text-slate-400 dark:text-slate-400">{tpl.description} · {tpl.tasks.length} tasks</div>
                       </div>
                     </div>
                   </button>
@@ -463,8 +463,8 @@ export default function TaskList({
         {pendingTasks.length === 0 && completedTasks.length === 0 && (
           <div className="py-4">
             <div className="text-center mb-4">
-              <p className="text-slate-500 dark:text-slate-400 text-base mb-1">No tasks yet</p>
-              <p className="text-slate-400 dark:text-slate-500 text-sm">Add a task above or pick a template to get started</p>
+              <p className="text-slate-500 dark:text-slate-300 text-base mb-1">No tasks yet</p>
+              <p className="text-slate-400 dark:text-slate-400 text-sm">Add a task above or pick a template to get started</p>
             </div>
             <div className="grid grid-cols-2 gap-2">
               {TASK_TEMPLATES.map((tpl) => (
@@ -475,11 +475,11 @@ export default function TaskList({
                     const newTasks = templateToTasks(tpl, selectedProjectId);
                     persist([...tasks, ...newTasks]);
                   }}
-                  className="text-left p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 transition-all group"
+                  className="text-left p-3 rounded-xl border border-slate-100 dark:border-[#1e3050] hover:border-purple-200 dark:hover:border-purple-700 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 transition-all group"
                 >
                   <div className="text-xl mb-1">{tpl.emoji}</div>
-                  <div className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">{tpl.label}</div>
-                  <div className="text-sm text-slate-400 dark:text-slate-500">{tpl.tasks.length} tasks</div>
+                  <div className="text-sm font-medium text-slate-700 dark:text-slate-100 group-hover:text-purple-700 dark:group-hover:text-purple-200 transition-colors">{tpl.label}</div>
+                  <div className="text-sm text-slate-400 dark:text-slate-400">{tpl.tasks.length} tasks</div>
                 </button>
               ))}
             </div>
@@ -498,14 +498,14 @@ export default function TaskList({
             <div
               className={`group flex items-center gap-3 p-3.5 rounded-xl border transition-colors ${
                 activeTaskId === task.id
-                  ? "border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20"
-                  : "border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                  ? "border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900/20"
+                  : "border-slate-200 dark:border-[#1e3050] hover:bg-slate-50 dark:hover:bg-[#131d30]"
               } ${isExpanded ? "rounded-b-none" : ""}`}
             >
               {/* Checkbox */}
               <button
                 onClick={() => toggleComplete(task.id)}
-                className="flex-shrink-0 w-[22px] h-[22px] rounded-md border-2 border-slate-300 dark:border-slate-600 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center justify-center"
+                className="flex-shrink-0 w-[22px] h-[22px] rounded-md border-2 border-slate-300 dark:border-slate-500 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center justify-center"
                 aria-label={`Mark "${task.title}" complete`}
               />
 
@@ -521,12 +521,12 @@ export default function TaskList({
                       if (e.key === "Enter") saveEdit(task.id);
                       if (e.key === "Escape") setEditingId(null);
                     }}
-                    className="w-full px-2 py-1 text-[15px] border border-blue-300 rounded-lg bg-white dark:bg-gray-800 dark:text-white outline-none"
+                    className="w-full px-2 py-1 text-[15px] border border-blue-300 rounded-lg bg-white dark:bg-[#131d30] dark:text-white outline-none"
                     autoFocus
                   />
                 ) : (
                   <div
-                    className="text-[15px] font-medium text-slate-800 dark:text-slate-100 break-words cursor-pointer leading-snug"
+                    className="text-[15px] font-medium text-slate-800 dark:text-slate-50 break-words cursor-pointer leading-snug"
                     onDoubleClick={() => startEditing(task)}
                   >
                     {task.title}
@@ -641,8 +641,8 @@ export default function TaskList({
             {isExpanded && (
               <div className={`border border-t-0 rounded-b-xl px-4 py-3 space-y-2 ${
                 activeTaskId === task.id
-                  ? "border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-900/10"
-                  : "border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30"
+                  ? "border-blue-300 dark:border-blue-600 bg-blue-50/50 dark:bg-blue-900/10"
+                  : "border-slate-200 dark:border-[#1e3050] bg-slate-50/50 dark:bg-[#0e1829]/50"
               }`}>
                 {/* Existing subtasks */}
                 {subtasks.map((sub) => (
@@ -698,7 +698,7 @@ export default function TaskList({
                     value={newSubtaskTitle}
                     onChange={(e) => setNewSubtaskTitle(e.target.value)}
                     placeholder="Add a subtask..."
-                    className="flex-1 px-2 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md bg-white dark:bg-gray-800 dark:text-white focus:border-blue-400 outline-none"
+                    className="flex-1 px-2 py-1 text-sm border border-slate-200 dark:border-[#243350] rounded-md bg-white dark:bg-[#131d30] dark:text-white focus:border-blue-400 outline-none"
                   />
                   <button
                     type="submit"
@@ -717,9 +717,9 @@ export default function TaskList({
 
         {/* Completed tasks */}
         {completedTasks.length > 0 && (
-          <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="pt-2 border-t border-slate-100 dark:border-[#1e3050]">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-sm font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">
+              <span className="text-sm font-medium text-slate-400 dark:text-slate-400 uppercase tracking-wide">
                 Completed ({completedTasks.length})
               </span>
               <button
@@ -754,11 +754,11 @@ export default function TaskList({
                       />
                     </svg>
                   </button>
-                  <span className="text-sm text-slate-400 dark:text-slate-500 line-through truncate">
+                  <span className="text-sm text-slate-400 dark:text-slate-400 line-through truncate">
                     {task.title}
                   </span>
                   {((task.timeSpent || 0) > 0 || task.sessions > 0) && (
-                    <span className="text-xs text-slate-300 dark:text-slate-600 ml-auto flex-shrink-0">
+                    <span className="text-xs text-slate-300 dark:text-slate-500 ml-auto flex-shrink-0">
                       {(task.timeSpent || 0) > 0 ? formatDuration(task.timeSpent) : `${task.sessions}s`}
                     </span>
                   )}

@@ -33,13 +33,13 @@ export default function CircularTimer({
       >
         <circle
           cx="50" cy="50" r="42"
-          fill={isBreak ? "rgba(5,150,105,0.06)" : "rgba(37,99,235,0.06)"}
+          fill={isBreak ? "rgba(16,185,129,0.08)" : "rgba(59,130,246,0.08)"}
           stroke="none"
         />
         <circle
           cx="50" cy="50" r="45"
           fill="none"
-          className="stroke-slate-200 dark:stroke-slate-600"
+          className="stroke-slate-200 dark:stroke-slate-500"
           strokeWidth="3"
           opacity="0.8"
         />
@@ -58,17 +58,17 @@ export default function CircularTimer({
       {/* Center text overlay */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div
-          className="rounded-full flex flex-col items-center justify-center text-center bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-600 shadow-lg"
+          className="rounded-full flex flex-col items-center justify-center text-center bg-white dark:bg-[#131d30] border-2 border-slate-200 dark:border-slate-500 shadow-lg"
           style={{ width: 'min(200px, 40vw)', height: 'min(200px, 40vw)' }}
         >
-          <div className="text-base font-bold mb-1 text-gray-700 dark:text-gray-200">
+          <div className="text-base font-bold mb-1 text-gray-700 dark:text-gray-100">
             {isBreak ? "🎉 " : ""}
             {label}
           </div>
           <div className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white leading-none tracking-tight">
             {displayTime}
           </div>
-          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-300 mt-1">
             {statusText}
           </div>
         </div>

@@ -92,7 +92,7 @@ export default function AppPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-8 h-8 border-4 border-slate-200 dark:border-gray-700 border-t-blue-500 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-slate-200 dark:border-[#243350] border-t-blue-500 rounded-full animate-spin" />
       </div>
     );
   }
@@ -102,16 +102,16 @@ export default function AppPage() {
       <div className="w-full max-w-[960px] flex flex-col lg:flex-row gap-4 sm:gap-5">
         {/* Timer column */}
         <div className="w-full lg:w-[420px] lg:flex-shrink-0">
-          <div className="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-gray-800 overflow-visible relative">
+          <div className="bg-white/80 dark:bg-[#111827] backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-[#1e3050] overflow-visible relative">
             {/* Header */}
             <header
               className="flex items-center justify-between px-5 py-5 text-white rounded-t-2xl"
               style={{
-                background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+                background: "linear-gradient(135deg, #0f1b33 0%, #1a2d4a 100%)",
               }}
             >
               <div className="flex items-center">
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm border border-white/20">
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/20 backdrop-blur-sm border border-white/25">
                   <svg
                     width="22"
                     height="22"
@@ -130,7 +130,7 @@ export default function AppPage() {
               <div className="flex items-center gap-1">
               <button
                 onClick={() => document.getElementById('tasks-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="lg:hidden text-xs text-white/70 hover:text-white transition px-2 py-1.5 rounded-lg hover:bg-white/10"
+                className="lg:hidden text-xs text-white/85 hover:text-white transition px-2 py-1.5 rounded-lg hover:bg-white/10"
               >
                 Tasks
               </button>
@@ -138,7 +138,7 @@ export default function AppPage() {
               {!user && (
                 <a
                   href="/login"
-                  className="text-sm text-white/80 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/10"
+                  className="text-sm text-white/90 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/10"
                 >
                   Log in
                 </a>
@@ -184,7 +184,7 @@ export default function AppPage() {
             )}
 
             {/* Main content */}
-            <div className="bg-white/60 dark:bg-gray-900 backdrop-blur-sm p-4">
+            <div className="bg-white/60 dark:bg-[#111827] backdrop-blur-sm p-4">
               <CircularTimer
                 remainingTime={timer.remainingTime}
                 totalDuration={
@@ -211,8 +211,8 @@ export default function AppPage() {
 
             {timer.lastQuote && (
               <div className="px-4 pb-3">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:bg-slate-800/40 dark:from-transparent dark:to-transparent rounded-xl p-3.5 border border-blue-100/80 dark:border-slate-700 text-center">
-                  <p className="text-sm italic text-slate-600 dark:text-slate-400 leading-relaxed">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:bg-[#131d30] dark:from-transparent dark:to-transparent rounded-xl p-3.5 border border-blue-100/80 dark:border-[#243350] text-center">
+                  <p className="text-sm italic text-slate-600 dark:text-slate-300 leading-relaxed">
                     &ldquo;{timer.lastQuote}&rdquo;
                   </p>
                 </div>
@@ -275,9 +275,9 @@ function ActiveTaskBanner({
   if (!title) return null;
 
   return (
-    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-2.5">
-      <div className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
-      <span className="text-sm font-medium text-blue-700 dark:text-blue-300 truncate flex-1">
+    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/25 border border-blue-200 dark:border-blue-700 rounded-lg px-3 py-2.5">
+      <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
+      <span className="text-sm font-medium text-blue-700 dark:text-blue-200 truncate flex-1">
         {title}
       </span>
       {!isRunning && (

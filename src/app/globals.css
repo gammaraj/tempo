@@ -3,10 +3,10 @@
 
 /* ===== Custom Properties ===== */
 :root {
-  --primary-blue: #2563eb;
-  --primary-blue-dark: #1d4ed8;
-  --accent-indigo: #4f46e5;
-  --success-green: #059669;
+  --primary-blue: #3b82f6;
+  --primary-blue-dark: #2563eb;
+  --accent-indigo: #6366f1;
+  --success-green: #10b981;
   --muted-slate: #64748b;
   --primary-color: var(--primary-blue);
   --secondary-color: var(--success-green);
@@ -184,22 +184,23 @@ input:focus-visible {
 /* ===== Dark Mode ===== */
 @media (prefers-color-scheme: dark) {
   .pause-button {
-    background: #475569;
+    background: #4b5e78;
   }
 
   .pause-button.running {
-    background: #2563eb;
+    background: #3b82f6;
+    box-shadow: 0 2px 16px rgba(59, 130, 246, 0.4);
   }
 
   .reset-button {
-    background: #334155;
-    color: #cbd5e1;
-    border-color: #475569;
+    background: #1e2d44;
+    color: #e2e8f0;
+    border-color: #3b4f6b;
   }
 
   .settings-panel {
-    background: #1e293b;
-    border-color: #334155;
-    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.5);
+    background: #131d30;
+    border-color: #243350;
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.6);
   }
 }

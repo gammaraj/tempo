@@ -9,12 +9,12 @@ export default function UserMenu() {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs text-white/70 truncate max-w-[140px] hidden sm:inline">
+      <span className="text-xs text-white/85 truncate max-w-[140px] hidden sm:inline">
         {user.email}
       </span>
       <button
         onClick={signOut}
-        className="text-xs text-white/60 hover:text-white/90 transition-colors px-2 py-1 rounded-md hover:bg-white/10"
+        className="text-xs text-white/75 hover:text-white transition-colors px-2 py-1 rounded-md hover:bg-white/10"
       >
         Sign out
       </button>

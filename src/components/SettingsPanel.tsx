@@ -66,7 +66,7 @@ export default function SettingsPanel({
         <div
           className="px-6 py-4 text-white flex justify-between items-center"
           style={{
-            background: "#1e293b",
+            background: "#152238",
           }}
         >
           <h3 className="text-lg font-bold flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function SettingsPanel({
         <form onSubmit={handleSubmit} className="p-5 space-y-5">
           {/* Quick Presets */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
               <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
               Quick Presets
             </h4>
@@ -122,8 +122,8 @@ export default function SettingsPanel({
                     }}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
                       isActive
-                        ? "bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 ring-1 ring-blue-200 dark:ring-blue-800"
-                        : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        ? "bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-200 ring-1 ring-blue-200 dark:ring-blue-800"
+                        : "bg-slate-50 dark:bg-[#131d30] border-slate-200 dark:border-[#243350] text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1a2744]"
                     }`}
                     title={preset.description}
                   >
@@ -138,7 +138,7 @@ export default function SettingsPanel({
 
           {/* Timer Settings */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
               <div className="w-2 h-2 bg-blue-600 rounded-full mr-2" />
               Timer Settings
             </h4>
@@ -227,8 +227,8 @@ export default function SettingsPanel({
                       onClick={() => setDailyGoal(gp.sessions)}
                       className={`flex-1 text-sm py-1 rounded-lg border transition-all ${
                         dailyGoal === gp.sessions
-                          ? "bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300"
-                          : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700"
+                        ? "bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-200"
+                        : "bg-white dark:bg-[#131d30] border-slate-200 dark:border-[#243350] text-slate-500 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#1a2744]"
                       }`}
                       title={gp.description}
                     >
@@ -242,17 +242,17 @@ export default function SettingsPanel({
 
           {/* Preferences */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
               <div className="w-2 h-2 bg-gray-500 rounded-full mr-2" />
               Preferences
             </h4>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700 space-y-2">
-              <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="bg-gray-50 dark:bg-[#0e1829] rounded-xl p-3 border border-gray-200 dark:border-[#243350] space-y-2">
+              <div className="flex items-center justify-between p-3 bg-white dark:bg-[#131d30] rounded-lg border border-gray-200 dark:border-[#243350]">
                 <div className="flex items-center">
                   <span className="text-base mr-2">🚀</span>
                   <label
                     htmlFor="autoStart"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="text-sm font-medium text-gray-700 dark:text-gray-200"
                   >
                     Auto-start sessions
                   </label>
@@ -270,17 +270,17 @@ export default function SettingsPanel({
 
           {/* Notifications */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center">
               <span className="text-base mr-2">🔔</span>
               Notifications
             </h4>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="bg-gray-50 dark:bg-[#0e1829] rounded-xl p-3 border border-gray-200 dark:border-[#243350]">
+              <div className="flex items-center justify-between p-3 bg-white dark:bg-[#131d30] rounded-lg border border-gray-200 dark:border-[#243350]">
                 <div className="flex items-center">
                   <span className="text-base mr-2">💬</span>
                   <label
                     htmlFor="notifications"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="text-sm font-medium text-gray-700 dark:text-gray-200"
                   >
                     Show motivational quotes
                   </label>
@@ -293,7 +293,7 @@ export default function SettingsPanel({
                   className="h-5 w-5 text-blue-600 border-gray-300 rounded"
                 />
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 px-2">
+              <p className="text-sm text-gray-500 dark:text-gray-300 mt-2 px-2">
                 Get inspirational quotes as browser notifications after each work
                 session
               </p>
@@ -305,7 +305,7 @@ export default function SettingsPanel({
             type="submit"
             className="w-full text-white font-semibold py-3 px-5 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center text-base"
             style={{
-              background: "#2563eb",
+              background: "#3b82f6",
             }}
           >
             {saved ? (
