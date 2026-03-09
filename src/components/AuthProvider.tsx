@@ -56,6 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
     activateLocalStorage();
     setUser(null);
+    window.location.href = "/";
   };
 
   return (
