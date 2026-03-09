@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { DailyGoalData } from "@/lib/types";
 import { loadStreakHistory } from "@/lib/storage";
 import type { StreakHistory } from "@/lib/types";
+import { useAuth } from "@/components/AuthProvider";
 
 interface DailyProgressProps {
   dailyGoalData: DailyGoalData;
@@ -14,6 +15,7 @@ export default function DailyProgress({
   dailyGoalData,
   dailyGoal,
 }: DailyProgressProps) {
+  const { loading: authLoading } = useAuth();
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [streakHistory, setStreakHistory] = useState<StreakHistory>({ days: {} });
@@ -25,10 +27,11 @@ export default function DailyProgress({
   const goalMet = dailyGoalData.sessionCount >= dailyGoal;
 
   useEffect(() => {
+    if (authLoading) return;
     if (showCalendar) {
       loadStreakHistory().then(setStreakHistory);
     }
-  }, [showCalendar, dailyGoalData]);
+  }, [showCalendar, dailyGoalData, authLoading]);
 
   const getStatusText = () => {
     if (goalMet) return "🎉 Daily goal achieved! Keep going!";
