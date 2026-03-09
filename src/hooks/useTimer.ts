@@ -41,7 +41,13 @@ export interface TimerState {
   getElapsedWorkTime: () => number;
 }
 
-export function useTimer(): TimerState {
+export interface TimerOptions {
+  /** Pass auth state so the hook waits for the correct storage adapter before loading data. */
+  authLoading?: boolean;
+  user?: { id: string } | null;
+}
+
+export function useTimer({ authLoading = false, user }: TimerOptions = {}): TimerState {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [dailyGoalData, setDailyGoalData] = useState<DailyGoalData>({
     date: new Date().toDateString(),
@@ -66,8 +72,10 @@ export function useTimer(): TimerState {
   const statusRef = useRef<TimerStatus>("idle");
   const onSessionCompleteCbRef = useRef<(() => void) | null>(null);
 
-  // Load persisted data on mount
+  // Load persisted data — wait for auth to resolve so the correct adapter (Supabase vs localStorage) is active
   useEffect(() => {
+    if (authLoading) return;
+
     loadSettings().then((loaded) => {
       setSettings(loaded);
       settingsRef.current = loaded;
@@ -79,7 +87,8 @@ export function useTimer(): TimerState {
         dailyGoalRef.current = goal;
       });
     });
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading, user?.id]);
 
   // Sync refs
   useEffect(() => {

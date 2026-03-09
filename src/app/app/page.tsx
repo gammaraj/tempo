@@ -7,7 +7,7 @@ import TimerControls from "@/components/TimerControls";
 import DailyProgress from "@/components/DailyProgress";
 import SettingsPanel from "@/components/SettingsPanel";
 import TaskList from "@/components/TaskList";
-import UserMenu from "@/components/UserMenu";
+import Navbar from "@/components/Navbar";
 import { useAuth } from "@/components/AuthProvider";
 import { loadTasks, saveTasks } from "@/lib/storage";
 
@@ -20,7 +20,7 @@ function formatTime(ms: number): string {
 
 export default function AppPage() {
   const { user, loading } = useAuth();
-  const timer = useTimer();
+  const timer = useTimer({ authLoading: loading, user });
   const [showSettings, setShowSettings] = useState(false);
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
   const activeTaskIdRef = useRef<string | null>(null);
@@ -98,34 +98,21 @@ export default function AppPage() {
   }
 
   return (
-    <div className="flex items-start justify-center min-h-screen p-3 pt-4 sm:p-4 sm:pt-8">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0b1121]">
+      <Navbar />
+      <div className="flex items-start justify-center flex-1 p-3 pt-2 sm:p-4 sm:pt-3">
       <div className="w-full max-w-[1080px] flex flex-col lg:flex-row gap-4 sm:gap-5">
         {/* Timer column */}
         <div className="w-full lg:w-[400px] lg:flex-shrink-0">
           <div className="bg-white/80 dark:bg-[#111827] backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-[#1e3050] overflow-visible relative">
             {/* Header */}
             <header
-              className="flex items-center justify-between px-5 py-5 text-white rounded-t-2xl"
+              className="flex items-center justify-between px-5 py-4 text-white rounded-t-2xl"
               style={{
                 background: "linear-gradient(135deg, #0f1b33 0%, #1a2d4a 100%)",
               }}
             >
-              <div className="flex items-center">
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/20 backdrop-blur-sm border border-white/25">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle cx="16" cy="16" r="13" stroke="white" strokeWidth="2.5" strokeOpacity="0.3" fill="none"/>
-                    <circle cx="16" cy="16" r="13" stroke="white" strokeWidth="2.5" fill="none" strokeDasharray="81.7" strokeDashoffset="20.4" strokeLinecap="round" transform="rotate(-90 16 16)"/>
-                    <path d="M18 6L12 17h5l-2 10 8-13h-6l3-8z" fill="white"/>
-                  </svg>
-                </div>
-                <h1 className="text-xl font-bold ml-3">Tempo</h1>
-              </div>
+              <h1 className="text-base font-semibold tracking-wide">Focus Timer</h1>
 
               <div className="flex items-center gap-1">
               <button
@@ -134,15 +121,6 @@ export default function AppPage() {
               >
                 Tasks
               </button>
-              {user && <UserMenu />}
-              {!user && (
-                <a
-                  href="/login"
-                  className="text-sm text-white/90 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/10"
-                >
-                  Log in
-                </a>
-              )}
               <button
                 onClick={() => setShowSettings(true)}
                 className="text-white hover:text-gray-200 transition p-1.5 rounded-full hover:bg-white/10"
@@ -240,6 +218,7 @@ export default function AppPage() {
         </div>
 
         <div className="sr-only" aria-live="polite" aria-atomic="true" />
+      </div>
       </div>
 
       {showSettings && (

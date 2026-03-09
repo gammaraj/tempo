@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import Navbar from "@/components/Navbar";
 
 const title = "Blog – Tempo | Productivity & Focus Tips";
 const description =
@@ -22,25 +23,8 @@ export default function BlogIndexPage() {
   const posts = getAllPosts();
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0f1a]">
-      <nav className="flex items-center justify-between px-6 py-4 max-w-3xl mx-auto">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-900 dark:bg-neutral-800">
-            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="16" r="13" stroke="white" strokeWidth="2.5" strokeOpacity="0.3" fill="none" />
-              <circle cx="16" cy="16" r="13" stroke="white" strokeWidth="2.5" fill="none" strokeDasharray="81.7" strokeDashoffset="20.4" strokeLinecap="round" transform="rotate(-90 16 16)" />
-              <path d="M18 6L12 17h5l-2 10 8-13h-6l3-8z" fill="white" />
-            </svg>
-          </div>
-          <span className="text-base font-bold text-neutral-900 dark:text-white">Tempo</span>
-        </Link>
-        <Link
-          href="/app"
-          className="text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors"
-        >
-          Open App
-        </Link>
-      </nav>
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0a0f1a]">
+      <Navbar />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white tracking-tight">
@@ -87,7 +71,7 @@ export default function BlogIndexPage() {
         </div>
       </main>
 
-      <footer className="py-8 text-center text-xs text-neutral-400 dark:text-neutral-600">
+      <footer className="mt-auto py-8 text-center text-xs text-neutral-400 dark:text-neutral-600">
         Built for focus. Free forever.
       </footer>
     </div>
