@@ -212,8 +212,17 @@ export class SupabaseStorageAdapter implements StorageAdapter {
   async saveTasks(tasks: Task[]): Promise<void> {
     const userId = await this.getUserId();
 
-    // Delete all existing tasks and re-insert (simple full-sync approach)
-    await this.supabase.from("tasks").delete().eq("user_id", userId);
+    // Remove tasks that are no longer in the list
+    const keepIds = tasks.map((t) => t.id);
+    if (keepIds.length > 0) {
+      await this.supabase
+        .from("tasks")
+        .delete()
+        .eq("user_id", userId)
+        .not("id", "in", `(${keepIds.join(",")})`);
+    } else {
+      await this.supabase.from("tasks").delete().eq("user_id", userId);
+    }
 
     if (tasks.length === 0) return;
 
@@ -229,7 +238,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       subtasks: t.subtasks ?? [],
     }));
 
-    await this.supabase.from("tasks").insert(rows);
+    await this.supabase.from("tasks").upsert(rows);
   }
 
   // ── Projects ──────────────────────────────────────────
@@ -259,7 +268,17 @@ export class SupabaseStorageAdapter implements StorageAdapter {
   async saveProjects(projects: Project[]): Promise<void> {
     const userId = await this.getUserId();
 
-    await this.supabase.from("projects").delete().eq("user_id", userId);
+    // Remove projects that are no longer in the list
+    const keepIds = projects.map((p) => p.id);
+    if (keepIds.length > 0) {
+      await this.supabase
+        .from("projects")
+        .delete()
+        .eq("user_id", userId)
+        .not("id", "in", `(${keepIds.join(",")})`);
+    } else {
+      await this.supabase.from("projects").delete().eq("user_id", userId);
+    }
 
     if (projects.length === 0) return;
 
@@ -270,7 +289,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: p.createdAt,
     }));
 
-    await this.supabase.from("projects").insert(rows);
+    await this.supabase.from("projects").upsert(rows);
   }
 
   async loadSelectedProjectId(): Promise<string> {
