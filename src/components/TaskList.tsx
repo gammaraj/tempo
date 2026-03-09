@@ -300,6 +300,24 @@ export default function TaskList({
     setDragOverTaskId(null);
   };
 
+  const moveTask = (taskId: string, direction: "up" | "down") => {
+    const ordered = [...pendingTasks];
+    const idx = ordered.findIndex((t) => t.id === taskId);
+    if (idx === -1) return;
+    const targetIdx = direction === "up" ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= ordered.length) return;
+
+    [ordered[idx], ordered[targetIdx]] = [ordered[targetIdx], ordered[idx]];
+
+    const orderMap = new Map<string, number>();
+    ordered.forEach((t, i) => orderMap.set(t.id, i));
+
+    const updated = tasks.map((t) =>
+      orderMap.has(t.id) ? { ...t, order: orderMap.get(t.id)! } : t
+    );
+    persist(updated);
+  };
+
   // Subtask helpers
   const addSubtask = (taskId: string) => {
     const title = newSubtaskTitle.trim();
@@ -699,11 +717,39 @@ export default function TaskList({
                   : ""
               }`}
             >
-              {/* Drag handle */}
-              <div className="flex-shrink-0 cursor-grab active:cursor-grabbing text-slate-300 dark:text-slate-600 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M7 2a2 2 0 10.001 4.001A2 2 0 007 2zm0 6a2 2 0 10.001 4.001A2 2 0 007 8zm0 6a2 2 0 10.001 4.001A2 2 0 007 14zm6-8a2 2 0 10-.001-4.001A2 2 0 0013 6zm0 2a2 2 0 10.001 4.001A2 2 0 0013 8zm0 6a2 2 0 10.001 4.001A2 2 0 0013 14z" />
-                </svg>
+              {/* Drag handle (desktop) / Move buttons (mobile) */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-0.5">
+                {/* Desktop: drag handle */}
+                <div className="hidden sm:block cursor-grab active:cursor-grabbing text-slate-300 dark:text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M7 2a2 2 0 10.001 4.001A2 2 0 007 2zm0 6a2 2 0 10.001 4.001A2 2 0 007 8zm0 6a2 2 0 10.001 4.001A2 2 0 007 14zm6-8a2 2 0 10-.001-4.001A2 2 0 0013 6zm0 2a2 2 0 10.001 4.001A2 2 0 0013 8zm0 6a2 2 0 10.001 4.001A2 2 0 0013 14z" />
+                  </svg>
+                </div>
+                {/* Mobile: up/down buttons */}
+                {pendingTasks.length > 1 && (
+                  <div className="sm:hidden flex flex-col -my-1">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); moveTask(task.id, "up"); }}
+                      disabled={pendingTasks[0]?.id === task.id}
+                      className="p-0.5 text-slate-300 dark:text-slate-600 hover:text-slate-500 disabled:opacity-0 transition-all"
+                      aria-label="Move up"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); moveTask(task.id, "down"); }}
+                      disabled={pendingTasks[pendingTasks.length - 1]?.id === task.id}
+                      className="p-0.5 text-slate-300 dark:text-slate-600 hover:text-slate-500 disabled:opacity-0 transition-all"
+                      aria-label="Move down"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
               </div>
               {/* Checkbox */}
               <button
@@ -728,11 +774,23 @@ export default function TaskList({
                     autoFocus
                   />
                 ) : (
-                  <div
-                    className="text-[15px] font-medium text-slate-800 dark:text-slate-50 break-words cursor-pointer leading-snug"
-                    onDoubleClick={() => startEditing(task)}
-                  >
-                    {task.title}
+                  <div className="flex items-center gap-1">
+                    <div
+                      className="text-[15px] font-medium text-slate-800 dark:text-slate-50 break-words cursor-pointer leading-snug flex-1"
+                      onDoubleClick={() => startEditing(task)}
+                    >
+                      {task.title}
+                    </div>
+                    <button
+                      onClick={() => startEditing(task)}
+                      className="flex-shrink-0 p-0.5 text-slate-300 dark:text-slate-600 hover:text-blue-500 dark:hover:text-blue-400 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all"
+                      aria-label={`Edit "${task.title}"`}
+                      title="Edit task"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                      </svg>
+                    </button>
                   </div>
                 )}
                 <div className="flex items-center gap-2 mt-0.5">
@@ -785,8 +843,13 @@ export default function TaskList({
                 )}
               </button>
 
-              {/* Start / Stop button */}
-              {!isTimerRunning && (
+              {/* Start / Select / In-progress button */}
+              {activeTaskId === task.id && isTimerRunning ? (
+                <span className="flex-shrink-0 px-2 py-1 text-sm font-medium rounded bg-blue-600 text-white flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  In progress
+                </span>
+              ) : (
                 <button
                   onClick={() => {
                     if (activeTaskId === task.id) {
@@ -803,7 +866,9 @@ export default function TaskList({
                   title={
                     activeTaskId === task.id
                       ? "Deselect task"
-                      : "Start working on this task"
+                      : isTimerRunning
+                        ? "Switch to this task"
+                        : "Start working on this task"
                   }
                 >
                   {activeTaskId === task.id ? (
@@ -813,20 +878,14 @@ export default function TaskList({
                       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M6.3 2.84A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.27l9.344-5.891a1.5 1.5 0 000-2.538L6.3 2.84z" />
                       </svg>
-                      Start
+                      {isTimerRunning ? "Switch" : "Start"}
                     </>
                   )}
                 </button>
               )}
-              {isTimerRunning && activeTaskId === task.id && (
-                <span className="flex-shrink-0 px-2 py-1 text-sm font-medium rounded bg-blue-600 text-white flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                  In progress
-                </span>
-              )}
 
-              {/* Delete */}
-              {!isTimerRunning && (
+              {/* Delete (hidden only for the active task while timer runs) */}
+              {!(isTimerRunning && activeTaskId === task.id) && (
                 <button
                   onClick={() => deleteTask(task.id)}
                   className="flex-shrink-0 p-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all"
@@ -894,6 +953,7 @@ export default function TaskList({
                         : "text-slate-700 dark:text-slate-200"
                     }`}
                       onDoubleClick={() => startEditingSubtask(sub)}
+                      onClick={() => startEditingSubtask(sub)}
                     >
                       {sub.title}
                     </span>
@@ -964,7 +1024,11 @@ export default function TaskList({
                   Archive
                 </button>
                 <button
-                  onClick={clearCompleted}
+                  onClick={() => {
+                    if (window.confirm(`Delete ${completedTasks.length} completed task${completedTasks.length !== 1 ? "s" : ""}? This cannot be undone.`)) {
+                      clearCompleted();
+                    }
+                  }}
                   className="text-sm text-slate-400 hover:text-red-500 transition-colors"
                 >
                   Clear

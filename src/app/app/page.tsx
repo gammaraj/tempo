@@ -250,10 +250,15 @@ function ActiveTaskBanner({
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    loadTasks().then((tasks) => {
-      const t = tasks.find((task) => task.id === taskId);
-      setTitle(t?.title ?? "");
-    });
+    const refresh = () => {
+      loadTasks().then((tasks) => {
+        const t = tasks.find((task) => task.id === taskId);
+        setTitle(t?.title ?? "");
+      });
+    };
+    refresh();
+    window.addEventListener("tempo-tasks-updated", refresh);
+    return () => window.removeEventListener("tempo-tasks-updated", refresh);
   }, [taskId]);
 
   if (!title) return null;
