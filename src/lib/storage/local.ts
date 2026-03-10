@@ -199,12 +199,25 @@ export class LocalStorageAdapter implements StorageAdapter {
     } catch { /* quota exceeded */ }
   }
 
-  async deleteTask(_id: string): Promise<void> {
-    // Local adapter handles deletion implicitly via saveTasks
+  async deleteTask(id: string): Promise<void> {
+    if (!isBrowser()) return;
+    try {
+      const raw = localStorage.getItem(TASKS_KEY);
+      if (!raw) return;
+      const tasks: Task[] = JSON.parse(raw);
+      localStorage.setItem(TASKS_KEY, JSON.stringify(tasks.filter((t) => t.id !== id)));
+    } catch { /* ignore */ }
   }
 
-  async deleteTasks(_ids: string[]): Promise<void> {
-    // Local adapter handles deletion implicitly via saveTasks
+  async deleteTasks(ids: string[]): Promise<void> {
+    if (!isBrowser()) return;
+    try {
+      const raw = localStorage.getItem(TASKS_KEY);
+      if (!raw) return;
+      const idSet = new Set(ids);
+      const tasks: Task[] = JSON.parse(raw);
+      localStorage.setItem(TASKS_KEY, JSON.stringify(tasks.filter((t) => !idSet.has(t.id))));
+    } catch { /* ignore */ }
   }
 
   // ── Projects ──────────────────────────────────────────
@@ -231,8 +244,14 @@ export class LocalStorageAdapter implements StorageAdapter {
     } catch { /* quota exceeded */ }
   }
 
-  async deleteProject(_id: string): Promise<void> {
-    // Local adapter handles deletion implicitly via saveProjects
+  async deleteProject(id: string): Promise<void> {
+    if (!isBrowser()) return;
+    try {
+      const raw = localStorage.getItem(PROJECTS_KEY);
+      if (!raw) return;
+      const projects: Project[] = JSON.parse(raw);
+      localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects.filter((p) => p.id !== id)));
+    } catch { /* ignore */ }
   }
 
   async loadSelectedProjectId(): Promise<string> {

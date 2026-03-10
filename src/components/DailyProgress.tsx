@@ -29,7 +29,9 @@ export default function DailyProgress({
   useEffect(() => {
     if (authLoading) return;
     if (showCalendar) {
-      loadStreakHistory().then(setStreakHistory);
+      loadStreakHistory().then(setStreakHistory).catch((err) => {
+        console.error("[Tempo] Failed to load streak history:", err);
+      });
     }
   }, [showCalendar, dailyGoalData, authLoading]);
 

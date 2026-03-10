@@ -109,6 +109,8 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
       loadDailyGoalData(loaded.dailyGoal).then((goal) => {
         setDailyGoalData(goal);
         dailyGoalRef.current = goal;
+      }).catch((err) => {
+        console.error("[Tempo] Failed to load daily goal data:", err);
       });
 
       // Restore timer state if navigated away and came back
@@ -206,6 +208,8 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
           }
         }
       }
+    }).catch((err) => {
+      console.error("[Tempo] Failed to load settings:", err);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoading, user?.id]);
@@ -276,8 +280,12 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
     }
 
     const goalMet = dgd.sessionCount >= s.dailyGoal;
-    recordDayCompletion(new Date(), dgd.sessionCount, goalMet);
-    saveDailyGoalData(dgd);
+    recordDayCompletion(new Date(), dgd.sessionCount, goalMet).catch((err) => {
+      console.error("[Tempo] Failed to record day completion:", err);
+    });
+    saveDailyGoalData(dgd).catch((err) => {
+      console.error("[Tempo] Failed to save daily goal data:", err);
+    });
     setDailyGoalData({ ...dgd });
     dailyGoalRef.current = dgd;
 
@@ -476,7 +484,9 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
     (newSettings: Settings) => {
       setSettings(newSettings);
       settingsRef.current = newSettings;
-      persistSettings(newSettings);
+      persistSettings(newSettings).catch((err) => {
+        console.error("[Tempo] Failed to save settings:", err);
+      });
 
       // If idle, update the displayed timer
       if (statusRef.current === "idle") {

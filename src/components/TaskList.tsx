@@ -110,7 +110,9 @@ export default function TaskList({
             { id: crypto.randomUUID(), title: "Draft design mockups", completed: false, sessions: 0, timeSpent: 0, createdAt: Date.now(), projectId: DEFAULT_PROJECT_ID, subtasks: [] },
             { id: crypto.randomUUID(), title: "Write unit tests", completed: false, sessions: 0, timeSpent: 0, createdAt: Date.now(), projectId: DEFAULT_PROJECT_ID, subtasks: [] },
           ];
-          saveTasks(samples);
+          saveTasks(samples).catch((err) => {
+            console.error("[Tempo] Failed to save sample tasks:", err);
+          });
           setTasks(samples);
         } else {
           // Migrate tasks missing projectId
@@ -119,7 +121,9 @@ export default function TaskList({
             projectId: t.projectId || DEFAULT_PROJECT_ID,
           }));
           if (migrated.some((t, i) => t.projectId !== existing[i]?.projectId)) {
-            saveTasks(migrated);
+            saveTasks(migrated).catch((err) => {
+              console.error("[Tempo] Failed to save migrated tasks:", err);
+            });
           }
           setTasks(migrated);
         }
@@ -129,8 +133,12 @@ export default function TaskList({
     });
 
     const handleUpdate = () => {
-      loadTasks().then(setTasks);
-      loadProjects().then(setProjects);
+      loadTasks().then(setTasks).catch((err) => {
+        console.error("[Tempo] Failed to reload tasks:", err);
+      });
+      loadProjects().then(setProjects).catch((err) => {
+        console.error("[Tempo] Failed to reload projects:", err);
+      });
     };
     window.addEventListener("tempo-tasks-updated", handleUpdate);
 
@@ -167,7 +175,9 @@ export default function TaskList({
 
   const selectProject = (id: string) => {
     setSelectedProjectId(id);
-    saveSelectedProjectId(id);
+    saveSelectedProjectId(id).catch((err) => {
+      console.error("[Tempo] Failed to save selected project:", err);
+    });
     setShowProjectMenu(false);
   };
 
