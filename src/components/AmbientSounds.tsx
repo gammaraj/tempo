@@ -176,13 +176,13 @@ function startSound(
 }
 
 export default function AmbientSounds() {
-  const [mode, setMode] = useState<"sounds" | "spotify" | "soundcloud" | "lofi">("spotify");
+  const [mode, setMode] = useState<"sounds" | "spotify" | "soundcloud" | "lofi">("soundcloud");
   const [activeSound, setActiveSound] = useState<SoundType | null>(null);
   const [volume, setVolume] = useState(0.5);
   const [ytStreamIdx, setYtStreamIdx] = useState(0);
   const [showYt, setShowYt] = useState(false);
   const [spotifyIdx, setSpotifyIdx] = useState(0);
-  const [scIdx, setScIdx] = useState(0);
+  const [scIdx, setScIdx] = useState(3);
 
   const ctxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
