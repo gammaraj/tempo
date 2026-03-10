@@ -47,48 +47,48 @@ export default function RadioPlayer() {
   return (
     <div className="mx-4 mb-3">
       <audio ref={audioRef} />
-      <div className="flex items-center gap-2.5 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-[#1a1333] dark:to-[#131d30] rounded-xl px-3.5 py-2.5 border border-purple-100/80 dark:border-[#2a2045]">
+      <div className="flex items-center gap-3 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-[#1a1333] dark:to-[#131d30] rounded-xl px-4 py-3 border border-purple-100/80 dark:border-[#2a2045]">
         {/* Play / Pause */}
         <button
           onClick={toggle}
-          className="w-8 h-8 flex items-center justify-center rounded-full bg-purple-500/15 dark:bg-purple-400/15 text-purple-600 dark:text-purple-300 hover:bg-purple-500/25 transition-colors flex-shrink-0"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-500/15 dark:bg-purple-400/15 text-purple-600 dark:text-purple-300 hover:bg-purple-500/25 transition-colors flex-shrink-0"
           aria-label={playing ? "Pause radio" : "Play radio"}
         >
           {playing ? (
-            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 24 24">
               <rect x="6" y="4" width="4" height="16" rx="1" />
               <rect x="14" y="4" width="4" height="16" rx="1" />
             </svg>
           ) : (
-            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
           )}
         </button>
 
         {/* Station info + nav */}
-        <div className="flex-1 min-w-0 flex items-center gap-1.5">
+        <div className="flex-1 min-w-0 flex items-center gap-2">
           <button
             onClick={() => setStationIdx((i) => (i - 1 + STATIONS.length) % STATIONS.length)}
-            className="text-purple-400/60 hover:text-purple-300 transition-colors flex-shrink-0"
+            className="text-purple-400/70 hover:text-purple-300 transition-colors flex-shrink-0 p-1"
             aria-label="Previous station"
           >
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
           </button>
           <div className="min-w-0">
-            <span className="text-xs font-semibold text-purple-700 dark:text-purple-200 truncate block">
+            <span className="text-sm font-semibold text-purple-700 dark:text-purple-200 truncate block">
               {station.name}
             </span>
-            <span className="text-[10px] text-purple-400/50 dark:text-purple-300/40">
+            <span className="text-[11px] text-purple-400/60 dark:text-purple-300/50">
               SomaFM
             </span>
           </div>
           <button
             onClick={nextStation}
-            className="text-purple-400/60 hover:text-purple-300 transition-colors flex-shrink-0"
+            className="text-purple-400/70 hover:text-purple-300 transition-colors flex-shrink-0 p-1"
             aria-label="Next station"
           >
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
           </button>
         </div>
 
