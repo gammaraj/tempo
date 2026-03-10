@@ -64,7 +64,7 @@ function AppMockup() {
         </div>
         <div className="flex-1 flex justify-center">
           <div className="bg-[#0d1117] rounded-md px-4 py-1 text-xs text-gray-400 font-mono">
-            usetempo.app/app
+            tempo-now.vercel.app/app
           </div>
         </div>
       </div>
