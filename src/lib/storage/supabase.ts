@@ -29,13 +29,17 @@ function check<T>(result: { data: T; error: { message: string } | null }): T {
  * Requires an authenticated Supabase client (user session must be active).
  */
 export class SupabaseStorageAdapter implements StorageAdapter {
+  private cachedUserId: string | null = null;
+
   constructor(private supabase: SupabaseClient) {}
 
   private async getUserId(): Promise<string> {
+    if (this.cachedUserId) return this.cachedUserId;
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
     if (!user) throw new Error("Not authenticated");
+    this.cachedUserId = user.id;
     return user.id;
   }
 
@@ -246,10 +250,14 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: t.createdAt,
       project_id: t.projectId,
       subtasks: t.subtasks ?? [],
-      due_date: t.dueDate ?? null,
+      ...(t.dueDate !== undefined ? { due_date: t.dueDate } : {}),
     }));
 
-    check(await this.supabase.from("tasks").upsert(rows, { onConflict: "user_id,id" }));
+    const result = await this.supabase.from("tasks").upsert(rows, { onConflict: "user_id,id" }).select("id");
+    if (result.error) {
+      console.error("[Tempo] Supabase saveTasks error:", result.error.message, result.error.details, result.error.hint);
+      throw new Error(result.error.message);
+    }
   }
 
   async deleteTask(id: string): Promise<void> {
@@ -312,7 +320,11 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: p.createdAt,
     }));
 
-    check(await this.supabase.from("projects").upsert(rows, { onConflict: "user_id,id" }));
+    const result = await this.supabase.from("projects").upsert(rows, { onConflict: "user_id,id" }).select("id");
+    if (result.error) {
+      console.error("[Tempo] Supabase saveProjects error:", result.error.message, result.error.details, result.error.hint);
+      throw new Error(result.error.message);
+    }
   }
 
   async deleteProject(id: string): Promise<void> {

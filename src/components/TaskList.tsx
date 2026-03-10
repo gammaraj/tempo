@@ -124,7 +124,9 @@ export default function TaskList({
           setTasks(migrated);
         }
       }
-    );
+    ).catch((err) => {
+      console.error("[Tempo] Failed to load data:", err);
+    });
 
     const handleUpdate = () => {
       loadTasks().then(setTasks);
@@ -147,11 +149,13 @@ export default function TaskList({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoading, userId]);
 
-  const persist = useCallback((updated: Task[]) => {
+  const persist = useCallback(async (updated: Task[]) => {
     setTasks(updated);
-    saveTasks(updated).catch((err) => {
+    try {
+      await saveTasks(updated);
+    } catch (err) {
       console.error("[Tempo] Failed to save tasks:", err);
-    });
+    }
   }, []);
 
   const persistProjects = useCallback((updated: Project[]) => {
