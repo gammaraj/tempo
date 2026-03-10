@@ -26,6 +26,14 @@ const YOUTUBE_STREAMS = [
   { id: "4xDzrJKXOOY", label: "synthwave radio", channel: "Lofi Girl" },
 ];
 
+// Spotify focus playlists (official embed — users can log in for full tracks)
+const SPOTIFY_PLAYLISTS = [
+  { uri: "37i9dQZF1DWZeKCadgRdKQ", label: "Deep Focus", desc: "Keep calm and focus" },
+  { uri: "37i9dQZF1DX3PFzdbtx1Us", label: "Peaceful Piano", desc: "Relax and indulge" },
+  { uri: "37i9dQZF1DWWQRwui0ExPn", label: "Lo-Fi Beats", desc: "Chill beats to study to" },
+  { uri: "37i9dQZF1DX8Uebhn9WZn4", label: "Chill Lofi Study Beats", desc: "The perfect study companion" },
+];
+
 function createRainSound(ctx: AudioContext, dest: AudioNode) {
   // Rain = filtered noise bursts with random modulation
   const bufferSize = ctx.sampleRate * 2;
@@ -149,11 +157,12 @@ function startSound(
 }
 
 export default function AmbientSounds() {
-  const [mode, setMode] = useState<"sounds" | "lofi">("sounds");
+  const [mode, setMode] = useState<"sounds" | "spotify" | "lofi">("sounds");
   const [activeSound, setActiveSound] = useState<SoundType | null>(null);
   const [volume, setVolume] = useState(0.5);
   const [ytStreamIdx, setYtStreamIdx] = useState(0);
   const [showYt, setShowYt] = useState(false);
+  const [spotifyIdx, setSpotifyIdx] = useState(0);
 
   const ctxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
@@ -216,6 +225,7 @@ export default function AmbientSounds() {
   }, []);
 
   const ytStream = YOUTUBE_STREAMS[ytStreamIdx];
+  const spotifyPlaylist = SPOTIFY_PLAYLISTS[spotifyIdx];
 
   return (
     <div className="mx-4 mb-3 space-y-2">
@@ -229,7 +239,17 @@ export default function AmbientSounds() {
               : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
           }`}
         >
-          🎧 Ambient Sounds
+          🎧 Sounds
+        </button>
+        <button
+          onClick={() => setMode("spotify")}
+          className={`flex-1 text-xs font-medium py-1.5 rounded-md transition-colors ${
+            mode === "spotify"
+              ? "bg-white dark:bg-[#1a2d4a] text-slate-800 dark:text-slate-100 shadow-sm"
+              : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+          }`}
+        >
+          🎵 Spotify
         </button>
         <button
           onClick={() => setMode("lofi")}
@@ -239,7 +259,7 @@ export default function AmbientSounds() {
               : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
           }`}
         >
-          📺 Lo-fi Radio
+          📺 Lo-fi
         </button>
       </div>
 
@@ -347,6 +367,49 @@ export default function AmbientSounds() {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Spotify mode */}
+      {mode === "spotify" && (
+        <div className="bg-slate-100 dark:bg-[#131d30] rounded-xl border border-slate-200 dark:border-[#243350] overflow-hidden">
+          <iframe
+            src={`https://open.spotify.com/embed/playlist/${spotifyPlaylist.uri}?utm_source=generator&theme=0`}
+            width="100%"
+            height="152"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            className="border-0"
+            title={spotifyPlaylist.label}
+          />
+          {/* Playlist selector */}
+          <div className="flex items-center justify-between px-3 py-2 border-t border-slate-200 dark:border-[#243350]">
+            <button
+              onClick={() => setSpotifyIdx((i) => (i - 1 + SPOTIFY_PLAYLISTS.length) % SPOTIFY_PLAYLISTS.length)}
+              className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors p-1"
+              aria-label="Previous playlist"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <div className="text-center min-w-0">
+              <span className="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate block">
+                {spotifyPlaylist.label}
+              </span>
+              <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                {spotifyPlaylist.desc}
+              </span>
+            </div>
+            <button
+              onClick={() => setSpotifyIdx((i) => (i + 1) % SPOTIFY_PLAYLISTS.length)}
+              className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors p-1"
+              aria-label="Next playlist"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+            </button>
+          </div>
+          <p className="text-[10px] text-slate-400 dark:text-slate-500 text-center pb-2 px-3">
+            Log in to Spotify for full tracks
+          </p>
         </div>
       )}
     </div>
