@@ -38,11 +38,13 @@ const SPOTIFY_PLAYLISTS = [
   { uri: "37i9dQZF1DWYoYGBbGKurt", label: "Lofi Chill", desc: "Chill beats to study to" },
 ];
 
-// SoundCloud playlists — full free playback, no login needed
+// SoundCloud playlists — full free playback, no login needed (all verified)
 const SOUNDCLOUD_PLAYLISTS = [
-  { url: "https://soundcloud.com/chilledcow/sets/lofi-hip-hop-music-beats-to", label: "Lo-fi Hip Hop", desc: "Beats to study to" },
-  { url: "https://soundcloud.com/ambientmusicalgenre/sets/ambient-music", label: "Ambient Music", desc: "Deep ambient soundscapes" },
-  { url: "https://soundcloud.com/indian-lofi/sets/indian-lofi-mix", label: "Indian Lo-fi", desc: "Indian chill beats" },
+  { url: "https://soundcloud.com/lofi_girl/sets/lofi-hiphop", label: "Lo-fi Hip Hop", desc: "Lofi Girl \u2022 217 tracks" },
+  { url: "https://soundcloud.com/chillhopdotcom/sets/lofihiphop", label: "Chillhop Lo-fi", desc: "Chillhop Music \u2022 89 tracks" },
+  { url: "https://soundcloud.com/lofi_girl/sets/synthwave-ambient-chill-music", label: "Synth Ambient", desc: "Lofi Girl \u2022 37 tracks" },
+  { url: "https://soundcloud.com/globetrotting-music/sets/indian-lofi-diwali-holi-lofi", label: "Indian Lo-fi", desc: "Diwali & Holi vibes \u2022 43 tracks" },
+  { url: "https://soundcloud.com/quest4goa/sets/chill-out-psy-ambient-music", label: "Psy Ambient / Goa", desc: "Quest4Goa \u2022 24 tracks" },
 ];
 
 // SomaFM stations for external linking (embedding prohibited by TOS)
