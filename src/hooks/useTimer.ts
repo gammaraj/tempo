@@ -155,7 +155,7 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
               const tickGap = now - lastTickRef.current;
               lastTickRef.current = now;
 
-              if (tickGap > 3000) {
+              if (tickGap > 60000) {
                 clearTimer();
                 if (isBreak) {
                   clearTimerState();
@@ -322,7 +322,7 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
       lastTickRef.current = now;
 
       // Skip break timer if device slept — just end the break
-      if (tickGap > 3000) {
+      if (tickGap > 60000) {
         clearTimer();
         clearTimerState();
         setIsBreakMode(false);
@@ -389,8 +389,8 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
       const tickGap = now - lastTickRef.current;
       lastTickRef.current = now;
 
-      // If gap between ticks > 3s, device likely slept — pause to avoid false completion
-      if (tickGap > 3000) {
+      // If gap between ticks > 60s, device likely slept — pause to avoid false completion
+      if (tickGap > 60000) {
         clearTimer();
         setStatus("paused");
         statusRef.current = "paused";
@@ -434,7 +434,7 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
         const tickGap = now - lastTickRef.current;
         lastTickRef.current = now;
 
-        if (tickGap > 3000) {
+        if (tickGap > 60000) {
           clearTimer();
           setStatus("paused");
           statusRef.current = "paused";
