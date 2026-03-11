@@ -930,30 +930,32 @@ export default function TaskList({
                     )}
                   </div>
                 )}
-                <div className="flex items-center gap-2 mt-0.5">
-                  {/* Inline action icons — edit & due date */}
-                  <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all">
+                <div className="flex items-center gap-2 mt-1">
+                  {/* Inline action buttons — edit & due date */}
+                  <div className="flex items-center gap-1.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all">
                     <button
                       onClick={() => startEditing(task)}
-                      className="p-0.5 text-slate-500 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                      className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-md transition-colors"
                       aria-label={`Edit "${task.title}"`}
                       title="Edit task"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                       </svg>
+                      Edit
                     </button>
                     <button
                       onClick={() => {
                         const input = document.getElementById(`due-${task.id}`) as HTMLInputElement;
                         input?.showPicker();
                       }}
-                      className="p-0.5 text-slate-500 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                      className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-md transition-colors"
                       title={task.dueDate ? `Due: ${formatDueDate(task.dueDate)}` : "Set due date"}
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
+                      {task.dueDate ? formatDueDate(task.dueDate) : "Due date"}
                     </button>
                     <input
                       id={`due-${task.id}`}

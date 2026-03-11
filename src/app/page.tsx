@@ -187,18 +187,18 @@ export default function LandingPage() {
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            Pomodoro timer + task tracker in one
+            Focus timer + tasks + progress — all in one
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white tracking-tight leading-[1.1]">
-            One timer.<br />
+            Your focus system,<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300">
-              Zero tab-switching.
+              not just a timer.
             </span>
           </h1>
           <p className="mt-5 text-lg sm:text-xl text-neutral-500 dark:text-neutral-400 max-w-lg mx-auto leading-relaxed">
-            Most people run a Pomodoro timer in one tab and a to-do list in another. Tempo puts both
-            in the same window — pick a task, start the timer, and every session is logged automatically.
+            Tempo combines a Pomodoro timer, task tracking, daily goals, streaks, and ambient sounds
+            into one distraction-free workspace. Pick a task, start a session, and watch your progress build.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
