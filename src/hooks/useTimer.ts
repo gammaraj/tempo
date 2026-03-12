@@ -50,7 +50,7 @@ export interface TimerOptions {
 export function useTimer({ authLoading = false, user }: TimerOptions = {}): TimerState {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [dailyGoalData, setDailyGoalData] = useState<DailyGoalData>({
-    date: new Date().toDateString(),
+    date: new Date().toLocaleDateString('en-CA'),
     sessionCount: 0,
     streak: 0,
     lastStreakUpdate: null,
@@ -109,105 +109,106 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
       loadDailyGoalData(loaded.dailyGoal).then((goal) => {
         setDailyGoalData(goal);
         dailyGoalRef.current = goal;
-      }).catch((err) => {
-        console.error("[Tempo] Failed to load daily goal data:", err);
-      });
 
-      // Restore timer state if navigated away and came back
-      const saved = loadTimerState();
-      if (saved) {
-        if (saved.status === "paused" && saved.remainingTime > 0) {
-          setRemainingTime(saved.remainingTime);
-          totalDurationRef.current = saved.remainingTime;
-          setStatus("paused");
-          statusRef.current = "paused";
-          setStatusText("Paused");
-          setLabel("Focus Time");
-        } else if ((saved.status === "running" || saved.status === "break") && saved.endTime) {
-          const rem = saved.endTime - Date.now();
-          if (rem > 0) {
-            // Timer is still active — restore and resume
-            if (saved.isBreak) {
-              setIsBreakMode(true);
-              isBreakModeRef.current = true;
-              setLabel("Great work!");
-              setStatusText("Take a well-deserved break");
-              setStatus("break");
-              statusRef.current = "break";
-              totalDurationRef.current = loaded.breakDuration;
-            } else {
-              setStatus("running");
-              statusRef.current = "running";
-              setLabel("Focus Time");
-              setStatusText("Stay focused! 💪");
-              totalDurationRef.current = loaded.workDuration;
-            }
-            setRemainingTime(rem);
-            startTimeRef.current = Date.now();
-            lastTickRef.current = Date.now();
-
-            // Restart interval — delegate to start/startWork would cause circular refs,
-            // so inline a simple countdown here
-            const isBreak = saved.isBreak;
-            const endTime = saved.endTime;
-            timerRef.current = setInterval(() => {
-              const now = Date.now();
-              const tickGap = now - lastTickRef.current;
-              lastTickRef.current = now;
-
-              if (tickGap > 60000) {
-                clearTimer();
-                if (isBreak) {
-                  clearTimerState();
-                  setIsBreakMode(false);
-                  isBreakModeRef.current = false;
-                  setLastQuote(null);
-                  setStatus("idle");
-                  statusRef.current = "idle";
-                  setLabel("Focus Time");
-                  setStatusText("Ready to focus");
-                  totalDurationRef.current = settingsRef.current.workDuration;
-                  setRemainingTime(settingsRef.current.workDuration);
-                } else {
-                  setStatus("paused");
-                  statusRef.current = "paused";
-                  setStatusText("Paused (device slept)");
-                  saveTimerState({ remainingTime: Math.max(0, endTime - now), status: "paused", isBreak: false });
-                }
-                return;
+        // Restore timer state AFTER daily goal data is loaded so onSessionComplete
+        // has the correct sessionCount (prevents resetting count to 1 on page reload)
+        const saved = loadTimerState();
+        if (saved) {
+          if (saved.status === "paused" && saved.remainingTime > 0) {
+            setRemainingTime(saved.remainingTime);
+            totalDurationRef.current = saved.remainingTime;
+            setStatus("paused");
+            statusRef.current = "paused";
+            setStatusText("Paused");
+            setLabel("Focus Time");
+          } else if ((saved.status === "running" || saved.status === "break") && saved.endTime) {
+            const rem = saved.endTime - Date.now();
+            if (rem > 0) {
+              // Timer is still active — restore and resume
+              if (saved.isBreak) {
+                setIsBreakMode(true);
+                isBreakModeRef.current = true;
+                setLabel("Great work!");
+                setStatusText("Take a well-deserved break");
+                setStatus("break");
+                statusRef.current = "break";
+                totalDurationRef.current = loaded.breakDuration;
+              } else {
+                setStatus("running");
+                statusRef.current = "running";
+                setLabel("Focus Time");
+                setStatusText("Stay focused! 💪");
+                totalDurationRef.current = loaded.workDuration;
               }
+              setRemainingTime(rem);
+              startTimeRef.current = Date.now();
+              lastTickRef.current = Date.now();
 
-              const r = Math.max(0, endTime - now);
-              setRemainingTime(r);
+              // Restart interval — delegate to start/startWork would cause circular refs,
+              // so inline a simple countdown here
+              const isBreak = saved.isBreak;
+              const endTime = saved.endTime;
+              timerRef.current = setInterval(() => {
+                const now = Date.now();
+                const tickGap = now - lastTickRef.current;
+                lastTickRef.current = now;
 
-              if (r <= 0) {
-                if (isBreak) {
+                if (tickGap > 60000) {
                   clearTimer();
-                  clearTimerState();
-                  setIsBreakMode(false);
-                  isBreakModeRef.current = false;
-                  setLastQuote(null);
-                  setStatus("idle");
-                  statusRef.current = "idle";
-                  setLabel("Focus Time");
-                  setStatusText("Ready to focus");
-                  totalDurationRef.current = settingsRef.current.workDuration;
-                  setRemainingTime(settingsRef.current.workDuration);
-                } else {
-                  onSessionComplete();
+                  if (isBreak) {
+                    clearTimerState();
+                    setIsBreakMode(false);
+                    isBreakModeRef.current = false;
+                    setLastQuote(null);
+                    setStatus("idle");
+                    statusRef.current = "idle";
+                    setLabel("Focus Time");
+                    setStatusText("Ready to focus");
+                    totalDurationRef.current = settingsRef.current.workDuration;
+                    setRemainingTime(settingsRef.current.workDuration);
+                  } else {
+                    setStatus("paused");
+                    statusRef.current = "paused";
+                    setStatusText("Paused (device slept)");
+                    saveTimerState({ remainingTime: Math.max(0, endTime - now), status: "paused", isBreak: false });
+                  }
+                  return;
                 }
+
+                const r = Math.max(0, endTime - now);
+                setRemainingTime(r);
+
+                if (r <= 0) {
+                  if (isBreak) {
+                    clearTimer();
+                    clearTimerState();
+                    setIsBreakMode(false);
+                    isBreakModeRef.current = false;
+                    setLastQuote(null);
+                    setStatus("idle");
+                    statusRef.current = "idle";
+                    setLabel("Focus Time");
+                    setStatusText("Ready to focus");
+                    totalDurationRef.current = settingsRef.current.workDuration;
+                    setRemainingTime(settingsRef.current.workDuration);
+                  } else {
+                    onSessionComplete();
+                  }
+                }
+              }, 200);
+            } else {
+              // Timer expired while away
+              clearTimerState();
+              if (!saved.isBreak) {
+                // Work session completed while navigated away — trigger completion
+                onSessionComplete();
               }
-            }, 200);
-          } else {
-            // Timer expired while away
-            clearTimerState();
-            if (!saved.isBreak) {
-              // Work session completed while navigated away — trigger completion
-              onSessionComplete();
             }
           }
         }
-      }
+      }).catch((err) => {
+        console.error("[Tempo] Failed to load daily goal data:", err);
+      });
     }).catch((err) => {
       console.error("[Tempo] Failed to load settings:", err);
     });
