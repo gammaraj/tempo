@@ -42,7 +42,7 @@ interface TaskListProps {
   activeTaskId: string | null;
   onSelectTask: (taskId: string | null) => void;
   onStartTask: (taskId: string) => void;
-  onCompleteTask: (taskId: string) => void;
+  onCompleteTask: (taskId: string) => number; // returns elapsed ms
   isTimerRunning: boolean;
 }
 
@@ -162,25 +162,35 @@ export default function TaskList({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoading, userId]);
 
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const prevTasksRef = useRef<Task[]>([]);
+  // Listen for session completion events from the timer and update task state atomically
+  useEffect(() => {
+    const handleSessionComplete = (e: Event) => {
+      const { taskId, elapsed } = (e as CustomEvent<{ taskId: string; elapsed: number }>).detail;
+      setTasks(prev => {
+        const updated = prev.map(t =>
+          t.id === taskId
+            ? { ...t, sessions: t.sessions + 1, timeSpent: (t.timeSpent || 0) + elapsed }
+            : t
+        );
+        saveTasks(updated).catch(err => {
+          console.error("[Tempo] Failed to save session update:", err);
+        });
+        return updated;
+      });
+    };
+    window.addEventListener("tempo-session-complete", handleSessionComplete);
+    return () => window.removeEventListener("tempo-session-complete", handleSessionComplete);
+  }, []);
 
   const persist = useCallback(async (updated: Task[]) => {
-    prevTasksRef.current = tasks;
     setTasks(updated);
-    // Debounce batch saves: coalesce rapid changes into one write
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(async () => {
-      try {
-        await saveTasks(updated);
-      } catch (err) {
-        console.error("[Tempo] Failed to save tasks:", err);
-        showToast("Failed to save tasks. Changes may be lost.", "error");
-        // Rollback to last known good state
-        setTasks(prevTasksRef.current);
-      }
-    }, 500);
-  }, [tasks, showToast]);
+    try {
+      await saveTasks(updated);
+    } catch (err) {
+      console.error("[Tempo] Failed to save tasks:", err);
+      showToast("Failed to save tasks. Changes may be lost.", "error");
+    }
+  }, [showToast]);
 
   const persistProjects = useCallback((updated: Project[]) => {
     setProjects(updated);
@@ -225,7 +235,7 @@ export default function TaskList({
     setEditingProjectId(null);
   };
 
-  const deleteProject = (id: string) => {
+  const deleteProject = async (id: string) => {
     if (id === DEFAULT_PROJECT_ID) return;
     // Move tasks from deleted project to General
     const updated = tasks.map((t) =>
@@ -233,7 +243,12 @@ export default function TaskList({
     );
     persist(updated);
     persistProjects(projects.filter((p) => p.id !== id));
-    removeProjectFromDB(id);
+    try {
+      await removeProjectFromDB(id);
+    } catch (err) {
+      console.error("[Tempo] Failed to delete project:", err);
+      showToast("Failed to delete project.", "error");
+    }
     if (selectedProjectId === id) selectProject(DEFAULT_PROJECT_ID);
   };
 
@@ -257,12 +272,15 @@ export default function TaskList({
   };
 
   const toggleComplete = (id: string) => {
-    // If completing the active task, stop timer and save time
+    // If completing the active task, stop timer and save elapsed time
+    let elapsed = 0;
     if (!tasks.find((t) => t.id === id)?.completed && activeTaskId === id) {
-      onCompleteTask(id);
+      elapsed = onCompleteTask(id);
     }
     const updated = tasks.map((t) =>
-      t.id === id ? { ...t, completed: !t.completed } : t
+      t.id === id
+        ? { ...t, completed: !t.completed, timeSpent: (t.timeSpent || 0) + elapsed }
+        : t
     );
     persist(updated);
     if (activeTaskId === id) onSelectTask(null);
@@ -298,8 +316,9 @@ export default function TaskList({
   };
 
   const clearCompleted = async () => {
-    const toRemove = tasks.filter((t) => t.completed && t.projectId === selectedProjectId).map((t) => t.id);
-    persist(tasks.filter((t) => !(t.completed && t.projectId === selectedProjectId)));
+    const matchesProject = (t: Task) => isAllProjects || t.projectId === selectedProjectId;
+    const toRemove = tasks.filter((t) => t.completed && matchesProject(t)).map((t) => t.id);
+    persist(tasks.filter((t) => !(t.completed && matchesProject(t))));
     try {
       await removeTasksFromDB(toRemove);
     } catch (err) {
@@ -309,8 +328,9 @@ export default function TaskList({
 
   const archiveCompleted = () => {
     const now = Date.now();
+    const matchesProject = (t: Task) => isAllProjects || t.projectId === selectedProjectId;
     const updated = tasks.map((t) =>
-      t.completed && t.projectId === selectedProjectId && !t.archivedAt
+      t.completed && matchesProject(t) && !t.archivedAt
         ? { ...t, archivedAt: now }
         : t
     );
@@ -325,8 +345,9 @@ export default function TaskList({
   };
 
   const deleteArchivedTasks = async () => {
-    const toRemove = tasks.filter((t) => t.archivedAt && t.projectId === selectedProjectId).map((t) => t.id);
-    persist(tasks.filter((t) => !(t.archivedAt && t.projectId === selectedProjectId)));
+    const matchesProject = (t: Task) => isAllProjects || t.projectId === selectedProjectId;
+    const toRemove = tasks.filter((t) => t.archivedAt && matchesProject(t)).map((t) => t.id);
+    persist(tasks.filter((t) => !(t.archivedAt && matchesProject(t))));
     try {
       await removeTasksFromDB(toRemove);
     } catch (err) {
@@ -996,7 +1017,7 @@ export default function TaskList({
                   {(task.sessions > 0 || (task.timeSpent || 0) > 0) && (
                     <span className="text-xs text-slate-500 dark:text-slate-400">
                       {task.sessions > 0 && (
-                        <>{task.sessions} session{task.sessions !== 1 ? "s" : ""}</>
+                        <>{task.sessions} total session{task.sessions !== 1 ? "s" : ""}</>
                       )}
                       {task.sessions > 0 && (task.timeSpent || 0) > 0 && " · "}
                       {(task.timeSpent || 0) > 0 && formatDuration(task.timeSpent)}

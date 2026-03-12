@@ -264,9 +264,9 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: t.createdAt,
       project_id: t.projectId,
       subtasks: t.subtasks ?? [],
-      ...(t.dueDate !== undefined ? { due_date: t.dueDate } : {}),
-      ...(t.order !== undefined ? { "order": t.order } : {}),
-      ...(t.archivedAt !== undefined ? { archived_at: t.archivedAt } : {}),
+      due_date: t.dueDate ?? null,
+      "order": t.order ?? null,
+      archived_at: t.archivedAt ?? null,
     }));
 
     const result = await this.supabase.from("tasks").upsert(rows, { onConflict: "user_id,id" }).select("id");
@@ -288,9 +288,9 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: task.createdAt,
       project_id: task.projectId,
       subtasks: task.subtasks ?? [],
-      ...(task.dueDate !== undefined ? { due_date: task.dueDate } : {}),
-      ...(task.order !== undefined ? { "order": task.order } : {}),
-      ...(task.archivedAt !== undefined ? { archived_at: task.archivedAt } : {}),
+      due_date: task.dueDate ?? null,
+      "order": task.order ?? null,
+      archived_at: task.archivedAt ?? null,
     };
     const result = await this.supabase.from("tasks").upsert(row, { onConflict: "user_id,id" }).select("id");
     if (result.error) {

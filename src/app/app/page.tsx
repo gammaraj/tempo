@@ -14,7 +14,7 @@ import OnboardingTour from "@/components/OnboardingTour";
 import NotificationPrompt from "@/components/NotificationPrompt";
 import DueDateReminders from "@/components/DueDateReminders";
 import { useAuth } from "@/components/AuthProvider";
-import { loadTasks, saveTasks } from "@/lib/storage";
+import { loadTasks } from "@/lib/storage";
 
 function formatTime(ms: number): string {
   const totalSeconds = Math.floor(ms / 1000);
@@ -47,19 +47,9 @@ export default function AppPage() {
       const taskId = activeTaskIdRef.current;
       if (!taskId) return;
       const elapsed = timer.settings.workDuration; // full session completed
-      loadTasks().then((tasks) => {
-        const updated = tasks.map((t) =>
-          t.id === taskId
-            ? { ...t, sessions: t.sessions + 1, timeSpent: (t.timeSpent || 0) + elapsed }
-            : t
-        );
-        saveTasks(updated).catch((err) => {
-          console.error("[Tempo] Failed to save task session data:", err);
-        });
-        window.dispatchEvent(new Event("tempo-tasks-updated"));
-      }).catch((err) => {
-        console.error("[Tempo] Failed to load tasks for session update:", err);
-      });
+      window.dispatchEvent(new CustomEvent("tempo-session-complete", {
+        detail: { taskId, elapsed },
+      }));
     });
     return () => timer.setOnSessionCompleteCallback(null);
   }, [timer]);
@@ -80,26 +70,14 @@ export default function AppPage() {
     }
   }, [timer]);
 
-  /** Complete the active task: save elapsed time, pause the timer, deselect */
-  const handleCompleteTask = useCallback((taskId: string) => {
+  /** Complete the active task: return elapsed time, pause the timer, deselect */
+  const handleCompleteTask = useCallback((taskId: string): number => {
     const elapsed = timer.getElapsedWorkTime();
-    if (elapsed > 0) {
-      loadTasks().then((tasks) => {
-        const updated = tasks.map((t) =>
-          t.id === taskId ? { ...t, timeSpent: (t.timeSpent || 0) + elapsed } : t
-        );
-        saveTasks(updated).catch((err) => {
-          console.error("[Tempo] Failed to save task time on complete:", err);
-        });
-        window.dispatchEvent(new Event("tempo-tasks-updated"));
-      }).catch((err) => {
-        console.error("[Tempo] Failed to load tasks on complete:", err);
-      });
-    }
     if (timer.status === "running") {
       timer.pause();
     }
     setActiveTaskId(null);
+    return elapsed;
   }, [timer]);
 
   if (loading) {
