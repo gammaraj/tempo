@@ -279,8 +279,8 @@ function ActiveTaskBanner({
   if (!title) return null;
 
   return (
-    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/25 border border-blue-200 dark:border-blue-700 rounded-lg px-3 py-2.5">
-      <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
+    <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/25 border border-blue-200 dark:border-blue-700 rounded-lg px-3 py-2.5 border-l-[3px] border-l-blue-500 dark:border-l-blue-400">
+      <div className={`w-2 h-2 rounded-full bg-blue-400 flex-shrink-0 ${isRunning ? 'animate-pulse' : ''}`} />
       <span className="text-sm font-medium text-blue-700 dark:text-blue-200 truncate flex-1">
         {title}
       </span>

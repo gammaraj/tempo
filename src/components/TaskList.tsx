@@ -851,7 +851,7 @@ export default function TaskList({
               onDragEnd={handleDragEnd}
               className={`group flex items-start gap-3 p-3.5 rounded-xl border transition-colors ${
                 activeTaskId === task.id
-                  ? "border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900/20"
+                  ? "border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900/20 border-l-[3px] border-l-blue-500 dark:border-l-blue-400"
                   : "border-slate-200 dark:border-[#1e3050] hover:bg-slate-50 dark:hover:bg-[#131d30]"
               } ${isExpanded ? "rounded-b-none" : ""} ${
                 dragTaskId === task.id ? "opacity-50" : ""

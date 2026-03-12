@@ -183,6 +183,7 @@ export default function AmbientSounds() {
   const [showYt, setShowYt] = useState(false);
   const [spotifyIdx, setSpotifyIdx] = useState(0);
   const [scIdx, setScIdx] = useState(3);
+  const [collapsed, setCollapsed] = useState(true);
 
   const ctxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
@@ -250,6 +251,23 @@ export default function AmbientSounds() {
 
   return (
     <div className="mx-4 mb-3 space-y-2">
+      {/* Collapse toggle header */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="w-full flex items-center justify-between px-3 py-2 bg-slate-100 dark:bg-[#131d30] rounded-lg border border-slate-200 dark:border-[#243350] hover:bg-slate-200/60 dark:hover:bg-[#1a2d4a] transition-colors"
+      >
+        <span className="text-xs font-medium text-slate-600 dark:text-slate-300">🎵 Music & Sounds</span>
+        <svg
+          className={`w-4 h-4 text-slate-400 dark:text-slate-500 transition-transform duration-200 ${collapsed ? '' : 'rotate-180'}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {!collapsed && (<>
       {/* Mode toggle */}
       <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#131d30] rounded-lg p-0.5 border border-slate-200 dark:border-[#243350]">
         <button
@@ -503,6 +521,7 @@ export default function AmbientSounds() {
           </a>
         ))}
       </div>
+      </>)}
     </div>
   );
 }
