@@ -82,7 +82,10 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
     status: TimerStatus;
     isBreak: boolean;
   }) => {
-    try { localStorage.setItem(TIMER_STATE_KEY, JSON.stringify(state)); } catch {}
+    try {
+      const toSave = { ...state, savedDate: new Date().toLocaleDateString('en-CA') };
+      localStorage.setItem(TIMER_STATE_KEY, JSON.stringify(toSave));
+    } catch {}
   }, []);
 
   const clearTimerState = useCallback(() => {
@@ -92,7 +95,14 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
   const loadTimerState = useCallback(() => {
     try {
       const raw = localStorage.getItem(TIMER_STATE_KEY);
-      return raw ? JSON.parse(raw) : null;
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      // Discard timer state from a previous day
+      if (parsed.savedDate && parsed.savedDate !== new Date().toLocaleDateString('en-CA')) {
+        localStorage.removeItem(TIMER_STATE_KEY);
+        return null;
+      }
+      return parsed;
     } catch { return null; }
   }, []);
 
@@ -271,10 +281,15 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
 
     const s = settingsRef.current;
     const dgd = { ...dailyGoalRef.current };
-    dgd.sessionCount++;
 
-    // Update streak
+    // If the day rolled over since the data was loaded, reset session count
     const today = new Date().toLocaleDateString('en-CA');
+    if (dgd.date !== today) {
+      dgd.sessionCount = 0;
+      dgd.date = today;
+    }
+
+    dgd.sessionCount++;
     if (dgd.sessionCount === s.dailyGoal && dgd.lastStreakUpdate !== today) {
       dgd.streak = (dgd.streak || 0) + 1;
       dgd.lastStreakUpdate = today;
@@ -504,6 +519,43 @@ export function useTimer({ authLoading = false, user }: TimerOptions = {}): Time
       clearTimer();
     };
   }, [clearTimer]);
+
+  // Reset daily data when the date changes (tab re-focus or midnight rollover)
+  useEffect(() => {
+    if (authLoading) return;
+
+    const reloadIfNewDay = () => {
+      const today = new Date().toLocaleDateString('en-CA');
+      if (dailyGoalRef.current.date !== today) {
+        loadDailyGoalData(settingsRef.current.dailyGoal).then((goal) => {
+          setDailyGoalData(goal);
+          dailyGoalRef.current = goal;
+        }).catch((err) => {
+          console.error("[Tempo] Failed to reload daily goal data:", err);
+        });
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        reloadIfNewDay();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    // Schedule a check at midnight
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const msUntilMidnight = tomorrow.getTime() - now.getTime();
+    const midnightTimer = setTimeout(() => {
+      reloadIfNewDay();
+    }, msUntilMidnight + 500); // small buffer to ensure we're past midnight
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      clearTimeout(midnightTimer);
+    };
+  }, [authLoading, user?.id]);
 
   // Notification permission is now requested via NotificationPrompt / SettingsPanel
   // instead of automatically on mount (which browsers may block).

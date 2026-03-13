@@ -183,11 +183,25 @@ export default function AmbientSounds() {
   const [showYt, setShowYt] = useState(false);
   const [spotifyIdx, setSpotifyIdx] = useState(0);
   const [scIdx, setScIdx] = useState(3);
+  const [scShuffle, setScShuffle] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
 
   const ctxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const scIframeRef = useRef<HTMLIFrameElement | null>(null);
+
+  // Send a command to the SoundCloud Widget via postMessage
+  const scCommand = useCallback((method: string, value?: unknown) => {
+    const iframe = scIframeRef.current;
+    if (!iframe?.contentWindow) return;
+    const msg: Record<string, unknown> = { method };
+    if (value !== undefined) msg.value = value;
+    iframe.contentWindow.postMessage(
+      JSON.stringify(msg),
+      "https://w.soundcloud.com"
+    );
+  }, []);
 
   const stopSound = useCallback(() => {
     if (sourceRef.current) {
@@ -267,7 +281,7 @@ export default function AmbientSounds() {
         </svg>
       </button>
 
-      {!collapsed && (<>
+      <div className={collapsed ? 'hidden' : ''}>
       {/* Mode toggle */}
       <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#131d30] rounded-lg p-0.5 border border-slate-200 dark:border-[#243350]">
         <button
@@ -467,6 +481,7 @@ export default function AmbientSounds() {
       {mode === "soundcloud" && (
         <div className="bg-slate-100 dark:bg-[#131d30] rounded-xl border border-slate-200 dark:border-[#243350] overflow-hidden">
           <iframe
+            ref={scIframeRef}
             width="100%"
             height="166"
             scrolling="no"
@@ -476,6 +491,49 @@ export default function AmbientSounds() {
             title={scPlaylist.label}
             className="border-0"
           />
+          {/* Track skip controls */}
+          <div className="flex items-center justify-center gap-3 px-3 py-1.5 border-t border-slate-200 dark:border-[#243350]">
+            <button
+              onClick={() => scCommand("prev")}
+              className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors p-1"
+              aria-label="Previous track"
+              title="Previous track"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+            </button>
+            <button
+              onClick={() => scCommand("toggle")}
+              className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors p-1"
+              aria-label="Play / Pause"
+              title="Play / Pause"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button
+              onClick={() => scCommand("next")}
+              className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors p-1"
+              aria-label="Next track"
+              title="Next track"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+            </button>
+            <button
+              onClick={() => {
+                const next = !scShuffle;
+                setScShuffle(next);
+                scCommand("setShuffle", next);
+              }}
+              className={`p-1 transition-colors ${
+                scShuffle
+                  ? "text-blue-500 dark:text-blue-400"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
+              }`}
+              aria-label="Shuffle"
+              title={scShuffle ? "Shuffle on" : "Shuffle off"}
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+            </button>
+          </div>
           {/* Playlist selector */}
           <div className="flex items-center justify-between px-3 py-2 border-t border-slate-200 dark:border-[#243350]">
             <button
@@ -521,7 +579,7 @@ export default function AmbientSounds() {
           </a>
         ))}
       </div>
-      </>)}
+      </div>
     </div>
   );
 }
