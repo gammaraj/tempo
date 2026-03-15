@@ -199,13 +199,6 @@ export default function LandingPage() {
       {/* Hero */}
       <main className="flex-1 flex flex-col items-center px-4 sm:px-6">
         <section className="text-center pt-12 sm:pt-20 pb-10 sm:pb-14 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/40 text-xs font-medium text-blue-700 dark:text-blue-300 mb-6">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Focus timer + tasks + progress — all in one
-          </div>
-
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white tracking-tight leading-[1.1]">
             Your focus system,<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300">
@@ -234,7 +227,7 @@ export default function LandingPage() {
         </section>
 
         {/* App screenshot / mockup */}
-        <section className="w-full max-w-4xl mx-auto pb-12 sm:pb-20">
+        <section className="w-full max-w-4xl mx-auto pt-4 sm:pt-8 pb-12 sm:pb-20">
           <AppMockup />
         </section>
 

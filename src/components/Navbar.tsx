@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { useTheme } from "@/components/ThemeProvider";
 import UserMenu from "@/components/UserMenu";
@@ -10,6 +11,7 @@ export default function Navbar() {
   const { user } = useAuth();
   const { theme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const cycleTheme = () => {
     const next = theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
@@ -32,7 +34,7 @@ export default function Navbar() {
     );
 
   const navLinks = [
-    { href: user ? "/app" : "/login", label: "My Tasks" },
+    ...(user ? [{ href: "/app", label: "My Tasks" }] : []),
     { href: "/stats", label: "Stats" },
     { href: "/blog", label: "Blog" },
   ];
@@ -41,11 +43,15 @@ export default function Navbar() {
     <nav className="relative z-10 px-4 sm:px-6 py-3 sm:py-4 max-w-5xl mx-auto w-full">
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-neutral-900 dark:bg-neutral-800">
+          <div className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-xl shadow-sm" style={{ background: "linear-gradient(135deg, #f59e0b, #ea580c)", boxShadow: "0 1px 3px rgba(245,158,11,0.25)" }}>
             <svg width="18" height="18" viewBox="0 0 32 32" fill="none" className="sm:w-5 sm:h-5">
-              <circle cx="16" cy="16" r="11.5" stroke="white" strokeWidth="1.5" strokeOpacity="0.3" fill="none"/>
-              <circle cx="16" cy="16" r="7" stroke="white" strokeWidth="1.25" strokeOpacity="0.55" fill="none" strokeLinecap="round" strokeDasharray="37.9 6.1" transform="rotate(120 16 16)"/>
-              <circle cx="16" cy="16" r="2.5" fill="white"/>
+              <circle cx="16" cy="16" r="10" stroke="white" strokeWidth="2" fill="none"/>
+              <circle cx="16" cy="16" r="5" stroke="white" strokeWidth="1.5" fill="none" strokeDasharray="4 3"/>
+              <line x1="16" y1="2" x2="16" y2="6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="16" y1="26" x2="16" y2="30" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="2" y1="16" x2="6" y2="16" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="26" y1="16" x2="30" y2="16" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="16" cy="16" r="2" fill="white"/>
             </svg>
           </div>
           <span className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">Foci</span>
@@ -57,7 +63,11 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-base font-semibold text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors"
+              className={`text-base font-medium transition-colors ${
+                pathname === link.href
+                  ? "text-neutral-900 dark:text-white"
+                  : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+              }`}
             >
               {link.label}
             </Link>
@@ -82,7 +92,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile: theme toggle + burger */}
+        {/* Mobile: theme toggle + login/burger */}
         <div className="flex sm:hidden items-center gap-2">
           <button
             onClick={cycleTheme}
@@ -91,21 +101,30 @@ export default function Navbar() {
           >
             {themeIcon}
           </button>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
+          {user ? (
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-2 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm font-medium px-3.5 py-1.5 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors"
+            >
+              Log in
+            </Link>
+          )}
         </div>
       </div>
 
@@ -118,7 +137,11 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-white transition-colors"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  pathname === link.href
+                    ? "text-neutral-900 dark:text-white bg-neutral-100 dark:bg-neutral-800"
+                    : "text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-white"
+                }`}
               >
                 {link.label}
               </Link>

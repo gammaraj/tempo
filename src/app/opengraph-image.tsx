@@ -9,7 +9,7 @@ export default function Image() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #1a1a36 0%, #0c0c18 100%)",
+          background: "linear-gradient(135deg, #0c0c18 0%, #1a1a36 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -29,14 +29,22 @@ export default function Image() {
             position: "relative",
           }}
         >
-          {/* Ambient glow */}
-          <div style={{ position: "absolute", width: 50, height: 50, borderRadius: "50%", background: "radial-gradient(circle, rgba(195,210,255,0.2) 0%, transparent 100%)" }} />
-          {/* Outer ring */}
-          <div style={{ position: "absolute", width: 84, height: 84, borderRadius: "50%", border: "3px solid rgba(255,255,255,0.25)" }} />
-          {/* Inner ring */}
-          <div style={{ position: "absolute", width: 50, height: 50, borderRadius: "50%", border: "2.5px solid rgba(255,255,255,0.5)" }} />
+          {/* Icon background */}
+          <div style={{ position: "absolute", width: 96, height: 96, borderRadius: 24, background: "linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)" }} />
+          {/* Crosshair circle */}
+          <div style={{ position: "absolute", width: 60, height: 60, borderRadius: "50%", border: "3px solid rgba(255,255,255,0.85)" }} />
+          {/* Inner dashed ring */}
+          <div style={{ position: "absolute", width: 36, height: 36, borderRadius: "50%", border: "2px dashed rgba(255,255,255,0.5)" }} />
+          {/* Top tick */}
+          <div style={{ position: "absolute", width: 3, height: 14, borderRadius: 2, background: "rgba(255,255,255,0.85)", top: 4 }} />
+          {/* Bottom tick */}
+          <div style={{ position: "absolute", width: 3, height: 14, borderRadius: 2, background: "rgba(255,255,255,0.85)", bottom: 4 }} />
+          {/* Left tick */}
+          <div style={{ position: "absolute", width: 14, height: 3, borderRadius: 2, background: "rgba(255,255,255,0.85)", left: 4 }} />
+          {/* Right tick */}
+          <div style={{ position: "absolute", width: 14, height: 3, borderRadius: 2, background: "rgba(255,255,255,0.85)", right: 4 }} />
           {/* Focal point */}
-          <div style={{ width: 18, height: 18, borderRadius: "50%", background: "radial-gradient(circle at 40% 35%, #ffffff, #d0d8ff)" }} />
+          <div style={{ width: 14, height: 14, borderRadius: "50%", background: "white" }} />
         </div>
         <div
           style={{
