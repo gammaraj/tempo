@@ -99,7 +99,7 @@ export default function AppPage() {
           <div className="bg-white/80 dark:bg-[#111827] backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-[#1e3050] overflow-visible relative">
             {/* Header */}
             <header
-              className="flex items-center justify-between px-5 py-4 text-white rounded-t-2xl"
+              className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-4 text-white rounded-t-2xl"
               style={{
                 background: "linear-gradient(135deg, #0f1b33 0%, #1a2d4a 100%)",
               }}
@@ -154,7 +154,7 @@ export default function AppPage() {
             )}
 
             {/* Main content */}
-            <div className="bg-white/60 dark:bg-[#111827] backdrop-blur-sm px-4 py-2">
+            <div className="bg-white/60 dark:bg-[#111827] backdrop-blur-sm px-4 py-1 sm:py-2">
               <CircularTimer
                 remainingTime={timer.remainingTime}
                 totalDuration={

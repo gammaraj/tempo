@@ -15,7 +15,7 @@ export default function TimerControls({
 }: TimerControlsProps) {
   return (
     <div
-      className="flex justify-center gap-3 my-1"
+      className="flex justify-center gap-3 my-0 sm:my-1"
       role="group"
       aria-label="Timer control buttons"
     >

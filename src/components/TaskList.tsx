@@ -566,8 +566,9 @@ export default function TaskList({
       {/* Project tabs */}
       {viewMode === "list" && (<>
       <div className="px-4 pt-3 pb-1 relative" ref={projectMenuRef}>
-        <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
-          {/* All Projects tab */}
+        <div className="relative">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide pr-6">
+            {/* All Projects tab */}
           <button
             onClick={() => selectProject(ALL_PROJECTS_ID)}
             className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
@@ -635,6 +636,9 @@ export default function TaskList({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v.01M12 12v.01M12 18v.01" />
             </svg>
           </button>
+          </div>
+          {/* Fade hint for scrollable overflow */}
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white dark:from-[#111827] to-transparent" />
         </div>
 
         {/* Inline add project input */}
@@ -881,7 +885,7 @@ export default function TaskList({
               onDragOver={(e) => handleDragOver(e, task.id)}
               onDrop={() => handleDrop(task.id)}
               onDragEnd={handleDragEnd}
-              className={`group flex items-start gap-3 p-3.5 rounded-xl border transition-colors ${
+              className={`group flex items-start gap-2 sm:gap-3 p-2.5 sm:p-3.5 rounded-xl border transition-colors ${
                 activeTaskId === task.id
                   ? "border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900/20 border-l-[3px] border-l-blue-500 dark:border-l-blue-400"
                   : "border-slate-200 dark:border-[#1e3050] hover:bg-slate-50 dark:hover:bg-[#131d30]"
@@ -964,7 +968,7 @@ export default function TaskList({
                 )}
                 <div className="flex items-center gap-2 mt-1">
                   {/* Inline action buttons — edit & due date */}
-                  <div className="flex items-center gap-1.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all">
+                  <div className="flex items-center gap-1.5 hidden sm:opacity-0 sm:group-hover:opacity-100 sm:flex transition-all">
                     <button
                       onClick={() => startEditing(task)}
                       className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-md transition-colors"
@@ -1081,10 +1085,10 @@ export default function TaskList({
                       onStartTask(task.id);
                     }
                   }}
-                  className={`flex-shrink-0 px-2.5 py-1 text-sm font-medium rounded transition-colors flex items-center gap-1 ${
+                  className={`flex-shrink-0 px-2 py-1 text-xs sm:text-sm font-medium rounded transition-colors flex items-center gap-1 ${
                     activeTaskId === task.id
                       ? "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300"
-                      : "bg-blue-600 text-white hover:bg-blue-700 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                      : "bg-blue-600 text-white hover:bg-blue-700 sm:opacity-0 sm:group-hover:opacity-100"
                   }`}
                   title={
                     activeTaskId === task.id
@@ -1111,7 +1115,7 @@ export default function TaskList({
               {!(isTimerRunning && activeTaskId === task.id) && (
                 <button
                   onClick={() => deleteTask(task.id)}
-                  className="flex-shrink-0 p-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all"
+                  className="flex-shrink-0 p-1 sm:p-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 sm:opacity-0 sm:group-hover:opacity-100 transition-all"
                   aria-label={`Delete "${task.title}"`}
                 >
                   <svg
