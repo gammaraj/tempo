@@ -3,4 +3,8 @@ Allow: /
 Disallow: /auth/
 Disallow: /api/
 
+# LLM / AI content files
+Allow: /llms.txt
+Allow: /llms-full.txt
+
 Sitemap: https://usefoci.com/sitemap.xml

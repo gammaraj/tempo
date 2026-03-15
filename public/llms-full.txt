@@ -13,6 +13,7 @@ Foci is more than a Pomodoro timer. It’s a complete focus system designed for 
 - **Task Tracking**: Create, start, complete, and delete tasks. Organize into projects with subtasks. Track sessions and total time spent per task automatically.
 - **Daily Goals & Streaks**: Set a daily session goal and track your streak of consecutive productive days.
 - **Ambient Music**: Built-in ambient sound generator (rain, café, white noise, brown noise) using Web Audio API — works offline. Plus optional lo-fi radio via YouTube embeds.
+- **Brown Noise for Focus**: Deep, warm ambient sound ideal for studying, deep work, and ADHD focus support — generated locally, works offline.
 - **Auto-Start**: Optionally auto-start the next work session when a break ends.
 - **Browser Notifications**: Get notified when a work session or break completes.
 - **Motivational Quotes**: Rotating inspirational quotes displayed during sessions to keep you motivated.
@@ -55,6 +56,12 @@ A: Yes. Foci works in any modern mobile browser. You can install it to your home
 
 **Q: How is Foci different from a simple Pomodoro timer?**
 A: A simple Pomodoro timer only counts down time. Foci combines a Pomodoro timer with per-task time tracking, daily session goals, streak tracking, built-in offline ambient music, motivational quotes, and optional cloud sync — all in one window. No tab-switching required.
+
+**Q: Does Foci have brown noise?**
+A: Yes. Foci includes a built-in brown noise generator that works completely offline using the Web Audio API. Brown noise is a deep, warm sound that's less harsh than white noise — ideal for long study sessions, deep work, and ADHD focus support.
+
+**Q: Can I use Foci for deep work?**
+A: Yes. Foci is designed for deep work sessions. Set your timer, pick a task, turn on ambient sounds like brown noise or rain, and focus without distraction. Foci tracks your sessions and daily goals so you can build a consistent deep work habit.
 
 **Q: What is the best free Pomodoro timer?**
 A: Foci is a strong choice: it is completely free, requires no account, and combines a Pomodoro timer with task tracking, ambient music, daily goals, and streak tracking in a single tool. It works on any device and can be installed as a PWA.
@@ -349,3 +356,83 @@ The important thing isn't the specific intervals — it's the principle: **focus
 Foci supports customizable work and break durations, making it easy to use any of these techniques. Set 25/5 for Pomodoro, 52/17 for the longer method, or any custom interval that suits your workflow.
 
 Every session is tracked automatically — so you can experiment with different durations and see which produces your best work. Try it free at https://usefoci.com/app — no sign-up required.
+
+---
+
+### Brown Noise for Studying: Why It Works and How to Use It
+
+> URL: https://usefoci.com/blog/brown-noise-for-studying-and-focus
+> Date: 2026-03-12 | Reading time: 6 min read
+> Tags: brown noise, studying, focus, ambient sounds, productivity
+
+Brown noise has gone from niche audio curiosity to mainstream focus tool. Search interest has exploded over the past two years, with millions of students and remote workers swearing it helps them concentrate. But does it actually work — and how is it different from white noise?
+
+#### What is brown noise?
+
+Brown noise (also called Brownian noise or red noise) is a deep, rumbling sound — like a strong waterfall, heavy rain on a roof, or distant thunder. It emphasizes lower frequencies much more than white noise, producing a warm, smooth texture that many people find deeply calming.
+
+The name comes from Robert Brown and Brownian motion (the random movement of particles), not the color. The "color" naming system for noise types refers to their frequency distribution:
+
+- **White noise** — equal energy across all frequencies (sounds like TV static)
+- **Pink noise** — more bass, less treble than white (sounds like steady rain)
+- **Brown noise** — even more bass-heavy (sounds like a low roar or rumble)
+
+#### Why brown noise helps you focus
+
+1. **It masks distracting sounds** — brown noise covers up irregular background sounds like conversations, traffic, and keyboard clicks. It provides a consistent sound floor that smooths everything out.
+2. **It's less harsh than white noise** — white noise contains high-frequency energy that can feel fatiguing over long sessions. Brown noise rolls off the high frequencies for a warmer listening experience.
+3. **It may reduce anxiety** — low-frequency ambient sound has been shown to reduce physiological markers of stress, which indirectly supports focus.
+4. **It creates a consistent environment** — your brain habituates to constant stimuli, so brown noise fades into the background while blocking sudden distracting sounds.
+
+#### Brown noise vs. white noise vs. pink noise
+
+| Feature | White noise | Pink noise | Brown noise |
+|---|---|---|---|
+| Sound quality | Hissy, bright | Balanced, natural | Deep, warm |
+| Frequency emphasis | All equal | Mid-low | Low |
+| Best for | Blocking sharp sounds | Sleep | Deep focus, studying |
+| Fatigue over time | Higher | Moderate | Lower |
+
+#### Brown noise for ADHD
+
+Brown noise has gained particular traction in ADHD communities. Many people with ADHD report that it helps with reducing sensory overwhelm, providing just enough stimulation to prevent the restless search for novelty, and making it easier to start tasks by creating a clear "work mode" signal.
+
+#### Try it with Foci
+
+Foci has brown noise built directly into the timer — no extra tabs, no ads, no subscriptions. The sounds are generated locally in your browser using the Web Audio API, so they work completely offline. Other ambient options include rain, white noise, café ambiance, and lo-fi music via SoundCloud.
+
+---
+
+### Deep Work in the Age of AI: How to Stay Focused When Everything Is Instant
+
+> URL: https://usefoci.com/blog/deep-work-in-the-age-of-ai
+> Date: 2026-03-15 | Reading time: 7 min read
+> Tags: deep work, AI, focus, productivity, distraction
+
+AI has made knowledge work faster than ever. But there's an uncomfortable side effect: the faster everything gets, the harder it becomes to sit with one task and think deeply about it.
+
+Deep work — the ability to focus without distraction on a cognitively demanding task — was already under threat from notifications and social media. Now AI tools have added a new layer: the temptation to constantly context-switch between asking, generating, reviewing, and refining.
+
+#### The new distraction isn't social media — it's productivity itself
+
+AI tools are insidious because they feel like work. Each interaction takes 30 seconds, but after 20 of them you've spent 10 minutes without producing anything original. Using an AI tool and doing deep work are fundamentally different cognitive modes — one is fast and reactive, the other is slow and effortful.
+
+#### Why deep work still matters
+
+With AI handling routine cognitive tasks, the premium on genuinely deep thinking has increased. The work AI can't easily replicate — original analysis, complex debugging, strategic thinking, creative work, and real learning — is exactly the work that requires sustained focus.
+
+#### 5 strategies for protecting deep work
+
+1. **Batch your AI usage** — collect questions and handle them in a batch during breaks, not mid-session.
+2. **Set a timer and commit to single-tasking** — a running timer is a commitment device. No tool-switching during a focus session.
+3. **Do the hard thinking before you ask AI** — struggle with the problem first to build understanding. Use AI to verify and refine, not to skip thinking.
+4. **Create a "deep work" environment** — close AI chat tabs, use ambient sound, put your phone away, block notification-heavy sites.
+5. **Track your deep work hours** — what gets measured gets managed. Even three to four 30-minute deep work sessions per day puts you ahead of most knowledge workers.
+
+#### The AI-focus sandwich
+
+AI can support deep work when used intentionally: use AI **before** a focus session to gather context, do **no AI during** the session, then use AI **after** to refine and expand on what you produced.
+
+#### Try it with Foci
+
+Foci is designed for this workflow. Set your focus duration, pick your task, start your ambient sounds, and let the timer hold you accountable. It tracks your sessions, streaks, and daily goals so you can see your deep work habit building over time. Try it free at https://usefoci.com/app.

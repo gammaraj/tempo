@@ -10,7 +10,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  keywords: ["pomodoro technique", "focus tips", "productivity guides", "time management", "study strategies", "deep work"],
+  keywords: ["pomodoro technique", "focus tips", "productivity guides", "time management", "study strategies", "deep work", "brown noise studying", "ambient sounds focus", "AI productivity", "adhd focus"],
   alternates: { canonical: "/blog" },
   openGraph: {
     title,

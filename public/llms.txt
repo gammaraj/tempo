@@ -13,6 +13,7 @@ Foci is more than a Pomodoro timer. It’s a complete focus system designed for 
 - **Task Tracking**: Create, start, complete, and delete tasks. Organize into projects with subtasks. Track sessions and total time spent per task automatically.
 - **Daily Goals & Streaks**: Set a daily session goal and track your streak of consecutive productive days.
 - **Ambient Music**: Built-in ambient sound generator (rain, café, white noise, brown noise) using Web Audio API — works offline. Plus optional lo-fi radio via YouTube embeds.
+- **Brown Noise for Focus**: Deep, warm ambient sound ideal for studying, deep work, and ADHD focus support — generated locally, works offline.
 - **Auto-Start**: Optionally auto-start the next work session when a break ends.
 - **Browser Notifications**: Get notified when a work session or break completes.
 - **Motivational Quotes**: Rotating inspirational quotes displayed during sessions to keep you motivated.
@@ -55,6 +56,12 @@ A: Yes. Foci works in any modern mobile browser. You can install it to your home
 
 **Q: How is Foci different from a simple Pomodoro timer?**
 A: A simple Pomodoro timer only counts down time. Foci combines a Pomodoro timer with per-task time tracking, daily session goals, streak tracking, built-in offline ambient music, motivational quotes, and optional cloud sync — all in one window. No tab-switching required.
+
+**Q: Does Foci have brown noise?**
+A: Yes. Foci includes a built-in brown noise generator that works completely offline using the Web Audio API. Brown noise is a deep, warm sound that's less harsh than white noise — ideal for long study sessions, deep work, and ADHD focus support.
+
+**Q: Can I use Foci for deep work?**
+A: Yes. Foci is designed for deep work sessions. Set your timer, pick a task, turn on ambient sounds like brown noise or rain, and focus without distraction. Foci tracks your sessions and daily goals so you can build a consistent deep work habit.
 
 **Q: What is the best free Pomodoro timer?**
 A: Foci is a strong choice: it is completely free, requires no account, and combines a Pomodoro timer with task tracking, ambient music, daily goals, and streak tracking in a single tool. It works on any device and can be installed as a PWA.

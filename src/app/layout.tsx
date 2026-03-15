@@ -53,6 +53,14 @@ export const metadata: Metadata = {
     "time tracking",
     "work break timer",
     "tomato timer",
+    "brown noise for studying",
+    "brown noise focus",
+    "ambient sounds for studying",
+    "deep work app",
+    "AI productivity",
+    "focus music",
+    "adhd focus tools",
+    "white noise study",
   ],
   authors: [{ name: "Foci" }],
   creator: "Foci",
@@ -98,6 +106,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link rel="help" href="/llms.txt" type="text/plain" />
+        <link rel="alternate" href="/llms-full.txt" type="text/plain" title="LLM-optimized full content" />
       </head>
       {GA_ID && (
         <>
