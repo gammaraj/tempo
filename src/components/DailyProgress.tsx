@@ -205,7 +205,7 @@ function CalendarView({
       <div className="flex items-center justify-between mb-3">
         <button
           onClick={prevMonth}
-          className="p-1 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-full transition-colors"
+          className="p-2 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-full transition-colors"
         >
           <svg className="w-5 h-5 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -216,7 +216,7 @@ function CalendarView({
         </h3>
         <button
           onClick={nextMonth}
-          className="p-1 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-full transition-colors"
+          className="p-2 hover:bg-slate-100 dark:hover:bg-[#1a2d4a] rounded-full transition-colors"
         >
           <svg className="w-5 h-5 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

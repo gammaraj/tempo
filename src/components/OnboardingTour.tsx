@@ -163,7 +163,7 @@ export default function OnboardingTour() {
       {/* Tooltip */}
       <div
         style={tooltipStyle}
-        className="w-[300px] bg-white dark:bg-[#131d30] border border-slate-200 dark:border-[#243350] rounded-xl shadow-2xl p-4 z-[9999]"
+        className="w-[300px] max-w-[90vw] bg-white dark:bg-[#131d30] border border-slate-200 dark:border-[#243350] rounded-xl shadow-2xl p-4 z-[9999]"
       >
         <div className="flex items-center justify-between mb-1">
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">
@@ -179,13 +179,13 @@ export default function OnboardingTour() {
         <div className="flex items-center justify-between mt-3">
           <button
             onClick={skip}
-            className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+            className="text-sm text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors py-1"
           >
             Skip tour
           </button>
           <button
             onClick={next}
-            className="px-3 py-1.5 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             {currentStep < STEPS.length - 1 ? "Next" : "Done"}
           </button>

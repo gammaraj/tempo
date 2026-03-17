@@ -106,7 +106,7 @@ export default function DueDateReminders() {
       {visible.length >= 3 && (
         <button
           onClick={dismissAll}
-          className="self-end text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors px-2 py-1"
+          className="self-end text-sm text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#1a2d4a]"
         >
           Dismiss all
         </button>

@@ -34,7 +34,7 @@ export default function UserMenu() {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 rounded-full p-0.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+        className="flex items-center gap-2 rounded-full p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
         aria-label="User menu"
         aria-expanded={open}
       >

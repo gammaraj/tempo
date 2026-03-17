@@ -105,7 +105,7 @@ export default function SettingsPanel({
           </h3>
           <button
             onClick={onClose}
-            className="text-white hover:text-slate-200 transition p-1 rounded hover:bg-white/20"
+            className="text-white hover:text-slate-200 transition p-2 rounded-lg hover:bg-white/20"
             aria-label="Close settings"
           >
             <svg
@@ -249,7 +249,7 @@ export default function SettingsPanel({
                       key={gp.label}
                       type="button"
                       onClick={() => setDailyGoal(gp.sessions)}
-                      className={`flex-1 text-sm py-1 rounded-lg border transition-all ${
+                      className={`flex-1 text-sm py-1.5 rounded-lg border transition-all ${
                         dailyGoal === gp.sessions
                         ? "bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-200"
                         : "bg-white dark:bg-[#131d30] border-slate-200 dark:border-[#243350] text-slate-500 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#1a2d4a]"

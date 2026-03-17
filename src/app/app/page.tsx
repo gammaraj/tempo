@@ -110,13 +110,13 @@ export default function AppPage() {
               <div className="flex items-center gap-1">
               <button
                 onClick={() => document.getElementById('tasks-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="lg:hidden text-xs text-white/85 hover:text-white transition px-2 py-1.5 rounded-lg hover:bg-white/10"
+                className="lg:hidden text-sm text-white/85 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/10"
               >
                 Tasks
               </button>
               <button
                 onClick={() => setShowSettings(true)}
-                className="text-white hover:text-slate-200 transition p-1.5 rounded-full hover:bg-white/10"
+                className="text-white hover:text-slate-200 transition p-2 rounded-full hover:bg-white/10"
                 aria-label="Open settings"
               >
                 <svg
