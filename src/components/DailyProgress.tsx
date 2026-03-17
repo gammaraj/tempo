@@ -49,26 +49,26 @@ export default function DailyProgress({
   };
 
   return (
-    <section className="px-4 py-1.5 sm:py-3" aria-labelledby="daily-progress-heading">
+    <section className="px-4 py-1 sm:py-3" aria-labelledby="daily-progress-heading">
       <div
         id="dailyGoalProgress"
-        className="bg-gradient-to-br from-white to-slate-50/80 dark:from-[#131d30] dark:to-[#131d30] rounded-xl shadow-sm border border-slate-200/80 dark:border-[#243350] p-3 sm:p-5"
+        className="bg-gradient-to-br from-white to-slate-50/80 dark:from-[#131d30] dark:to-[#131d30] rounded-xl shadow-sm border border-slate-200/80 dark:border-[#243350] p-2 sm:p-5"
       >
         {/* Sessions counter */}
-        <div className="flex items-center justify-between mb-2.5 sm:mb-5">
+        <div className="flex items-center justify-between mb-1.5 sm:mb-5">
           <div>
             <h2
               id="daily-progress-heading"
-              className="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-50 mb-0.5 sm:mb-1"
+              className="text-xs sm:text-base font-bold text-slate-800 dark:text-slate-50 mb-0 sm:mb-1"
             >
               Today&apos;s Sessions
             </h2>
-            <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-300" title={`${dailyGoalData.sessionCount} sessions completed / daily goal: ${dailyGoal}`}>
+            <div className="text-xl sm:text-3xl font-bold text-blue-600 dark:text-blue-300" title={`${dailyGoalData.sessionCount} sessions completed / daily goal: ${dailyGoal}`}>
               {dailyGoalData.sessionCount}
               <span className="text-slate-400">/</span>
               {dailyGoal}
             </div>
-            <div className="text-xs text-slate-400 dark:text-slate-500">
+            <div className="hidden sm:block text-xs text-slate-400 dark:text-slate-500">
               sessions / goal: {dailyGoal}
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function DailyProgress({
 
         {/* Progress bar */}
         <div
-          className="w-full bg-slate-100 dark:bg-[#1a2d4a] rounded-full h-2.5 sm:h-3.5 mb-1 sm:mb-4 border border-slate-200/80 dark:border-[#243350] overflow-hidden"
+          className="w-full bg-slate-100 dark:bg-[#1a2d4a] rounded-full h-2 sm:h-3.5 mb-0 sm:mb-4 border border-slate-200/80 dark:border-[#243350] overflow-hidden"
           role="progressbar"
           aria-valuenow={progressPercent}
           aria-valuemin={0}

@@ -271,13 +271,13 @@ export default function AmbientSounds() {
   const scPlaylist = SOUNDCLOUD_PLAYLISTS[scIdx];
 
   return (
-    <div className="mx-4 mb-3 space-y-2">
+    <div className="mx-4 mb-2 sm:mb-3 space-y-2">
       {/* Collapse toggle header */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-slate-100 dark:bg-[#131d30] rounded-xl border border-slate-200 dark:border-[#243350] hover:bg-slate-200/60 dark:hover:bg-[#1a2d4a] transition-colors"
+        className="w-full flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 bg-slate-100 dark:bg-[#131d30] rounded-xl border border-slate-200 dark:border-[#243350] hover:bg-slate-200/60 dark:hover:bg-[#1a2d4a] transition-colors"
       >
-        <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">🎵 Music & Sounds</span>
+        <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">🎵 Music & Sounds</span>
         <svg
           className={`w-5 h-5 text-slate-400 dark:text-slate-500 transition-transform duration-200 ${collapsed ? '' : 'rotate-180'}`}
           fill="none"
