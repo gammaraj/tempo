@@ -659,7 +659,7 @@ export default function TaskList({
               {tasks.filter((t) => !t.completed && !t.archivedAt).length}
             </span>
           </button>
-          {projects.slice(0, 5).map((p) => (
+          {projects.map((p) => (
             <button
               key={p.id}
               onClick={() => selectProject(p.id)}
