@@ -212,14 +212,13 @@ export default function LandingPage() {
       <main className="flex-1 flex flex-col items-center px-4 sm:px-6">
         <section className="text-center pt-12 sm:pt-20 pb-10 sm:pb-14 max-w-2xl mx-auto">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white tracking-tight leading-[1.1]">
-            Your focus system,<br />
+            Focus timer &amp; tasks,<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-blue-300">
-              not just a timer.
+              finally in one place.
             </span>
           </h1>
           <p className="mt-5 text-lg sm:text-xl text-neutral-500 dark:text-neutral-400 max-w-lg mx-auto leading-relaxed">
-            Timer. Tasks. Goals. Streaks. Ambient music to stay in the zone — Foci is everything
-            you need to focus, in one window.
+            Manage tasks, run focused sprints, track time per task, and build streaks — with ambient music to keep you in the zone. All in one window.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
