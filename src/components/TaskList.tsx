@@ -1074,6 +1074,7 @@ export default function TaskList({
                         type="date"
                         value={task.dueDate ?? ""}
                         onChange={(e) => setDueDate(task.id, e.target.value || undefined)}
+                        onFocus={(e) => { try { (e.target as HTMLInputElement).showPicker(); } catch {} }}
                         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
                       />
                     </div>
@@ -1664,6 +1665,7 @@ function TaskCalendarView({
                   <input
                     type="date"
                     onChange={(e) => { if (e.target.value) onSetDueDate(task.id, e.target.value); }}
+                    onFocus={(e) => { try { (e.target as HTMLInputElement).showPicker(); } catch {} }}
                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
                   />
                 </div>
