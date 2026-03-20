@@ -64,11 +64,15 @@ export default function TaskList({
   const [showAddProject, setShowAddProject] = useState(false);
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
   const [editProjectName, setEditProjectName] = useState("");
+  const [editingProjectDescId, setEditingProjectDescId] = useState<string | null>(null);
+  const [editProjectDesc, setEditProjectDesc] = useState("");
   const [showTemplateMenu, setShowTemplateMenu] = useState(false);
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
   const [newSubtaskTitle, setNewSubtaskTitle] = useState("");
   const [editingSubtaskId, setEditingSubtaskId] = useState<string | null>(null);
   const [editSubtaskTitle, setEditSubtaskTitle] = useState("");
+  const [editingDescId, setEditingDescId] = useState<string | null>(null);
+  const [editDesc, setEditDesc] = useState("");
   const [showArchived, setShowArchived] = useState(false);
   const [dragTaskId, setDragTaskId] = useState<string | null>(null);
   const [dragOverTaskId, setDragOverTaskId] = useState<string | null>(null);
@@ -240,6 +244,15 @@ export default function TaskList({
       projects.map((p) => (p.id === editingProjectId ? { ...p, name } : p))
     );
     setEditingProjectId(null);
+  };
+
+  const saveProjectDesc = () => {
+    if (!editingProjectDescId) return;
+    const desc = editProjectDesc.trim();
+    persistProjects(
+      projects.map((p) => (p.id === editingProjectDescId ? { ...p, description: desc || undefined } : p))
+    );
+    setEditingProjectDescId(null);
   };
 
   const deleteProject = async (id: string) => {
@@ -490,6 +503,21 @@ export default function TaskList({
     );
     persist(updated);
     setEditingSubtaskId(null);
+  };
+
+  const startEditingDesc = (task: Task) => {
+    setEditingDescId(task.id);
+    setEditDesc(task.description ?? "");
+  };
+
+  const saveDesc = (id: string) => {
+    const desc = editDesc.trim();
+    const updated = tasks.map((t) =>
+      t.id === id ? { ...t, description: desc || undefined } : t
+    );
+    const changed = updated.find((t) => t.id === id)!;
+    persistOne(updated, changed);
+    setEditingDescId(null);
   };
 
   // Filter tasks for the selected project
@@ -929,6 +957,42 @@ export default function TaskList({
       </div>
 
       <div className="p-4 space-y-3">
+        {/* Project description */}
+        {!isAllProjects && !isTimeFilter && currentProject && currentProject.id !== DEFAULT_PROJECT_ID && (
+          <div>
+            {editingProjectDescId === currentProject.id ? (
+              <textarea
+                value={editProjectDesc}
+                onChange={(e) => setEditProjectDesc(e.target.value)}
+                onBlur={saveProjectDesc}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") setEditingProjectDescId(null);
+                  if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) saveProjectDesc();
+                }}
+                placeholder="Add a project description..."
+                maxLength={500}
+                rows={2}
+                className="w-full px-3 py-2 text-sm border border-blue-300 rounded-lg bg-white dark:bg-[#131d30] dark:text-white outline-none resize-y"
+                autoFocus
+              />
+            ) : (
+              <button
+                onClick={() => {
+                  setEditingProjectDescId(currentProject.id);
+                  setEditProjectDesc(currentProject.description ?? "");
+                }}
+                className="w-full text-left px-3 py-2 text-sm rounded-lg border border-dashed border-slate-200 dark:border-[#243350] hover:border-blue-300 dark:hover:border-blue-600 hover:bg-slate-50 dark:hover:bg-[#1a2d4a] transition-colors"
+              >
+                {currentProject.description ? (
+                  <span className="text-slate-600 dark:text-slate-300 whitespace-pre-wrap">{currentProject.description}</span>
+                ) : (
+                  <span className="text-slate-400 dark:text-slate-500">Add a project description...</span>
+                )}
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Add task input */}
         <div className="flex gap-2">
         <form
@@ -1160,7 +1224,17 @@ export default function TaskList({
                       />
                     </div>
                   </div>
-                  {(hasSubtasks || task.sessions > 0 || (task.timeSpent || 0) > 0) && (
+                  {(hasSubtasks || task.description || task.sessions > 0 || (task.timeSpent || 0) > 0) && (
+                    <span className="text-xs text-slate-400 dark:text-slate-500">·</span>
+                  )}
+                  {task.description && (
+                    <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-0.5" title="Has description">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h10M4 18h14" />
+                      </svg>
+                    </span>
+                  )}
+                  {task.description && (hasSubtasks || task.sessions > 0 || (task.timeSpent || 0) > 0) && (
                     <span className="text-xs text-slate-400 dark:text-slate-500">·</span>
                   )}
                   {hasSubtasks && (
@@ -1284,6 +1358,36 @@ export default function TaskList({
                   ? "border-blue-300 dark:border-blue-600 bg-blue-50/50 dark:bg-blue-900/10"
                   : "border-slate-200 dark:border-[#1e3050] bg-slate-50/50 dark:bg-[#131d30]/50"
               }`}>
+                {/* Description */}
+                <div className="px-4 pb-2">
+                  {editingDescId === task.id ? (
+                    <textarea
+                      value={editDesc}
+                      onChange={(e) => setEditDesc(e.target.value)}
+                      onBlur={() => saveDesc(task.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Escape") setEditingDescId(null);
+                        if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) saveDesc(task.id);
+                      }}
+                      placeholder="Add a description..."
+                      maxLength={2000}
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm border border-blue-300 rounded-lg bg-white dark:bg-[#131d30] dark:text-white outline-none resize-y"
+                      autoFocus
+                    />
+                  ) : (
+                    <button
+                      onClick={() => startEditingDesc(task)}
+                      className="w-full text-left px-3 py-2 text-sm rounded-lg border border-dashed border-slate-200 dark:border-[#243350] hover:border-blue-300 dark:hover:border-blue-600 hover:bg-slate-50 dark:hover:bg-[#1a2d4a] transition-colors"
+                    >
+                      {task.description ? (
+                        <span className="text-slate-600 dark:text-slate-300 whitespace-pre-wrap">{task.description}</span>
+                      ) : (
+                        <span className="text-slate-400 dark:text-slate-500">Add a description...</span>
+                      )}
+                    </button>
+                  )}
+                </div>
                 {/* Existing subtasks */}
                 {subtasks.map((sub) => (
                   <div key={sub.id} className="group/sub flex items-center gap-2.5 py-1 pl-6 pr-4 ml-4 border-l-2 border-slate-200 dark:border-[#243350]">

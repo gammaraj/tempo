@@ -237,6 +237,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       createdAt: row.created_at,
       projectId: row.project_id,
       subtasks: row.subtasks ?? [],
+      ...(row.description ? { description: row.description } : {}),
       ...(row.due_date ? { dueDate: row.due_date } : {}),
       ...(row.order !== null && row.order !== undefined ? { order: row.order } : {}),
       ...(row.archived_at ? { archivedAt: row.archived_at } : {}),
@@ -257,6 +258,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: t.createdAt,
       project_id: t.projectId,
       subtasks: t.subtasks ?? [],
+      description: t.description ?? null,
       due_date: t.dueDate ?? null,
       "order": t.order ?? null,
       archived_at: t.archivedAt ?? null,
@@ -281,6 +283,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       created_at: task.createdAt,
       project_id: task.projectId,
       subtasks: task.subtasks ?? [],
+      description: task.description ?? null,
       due_date: task.dueDate ?? null,
       "order": task.order ?? null,
       archived_at: task.archivedAt ?? null,
@@ -331,6 +334,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       ? data.map((row) => ({
           id: row.id,
           name: row.name,
+          ...(row.description ? { description: row.description } : {}),
           createdAt: row.created_at,
         }))
       : [];
@@ -349,6 +353,7 @@ export class SupabaseStorageAdapter implements StorageAdapter {
       id: p.id,
       user_id: userId,
       name: p.name,
+      description: p.description ?? null,
       created_at: p.createdAt,
     }));
 
