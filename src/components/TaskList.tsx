@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Task, Project, DEFAULT_PROJECT, DEFAULT_PROJECT_ID, ALL_PROJECTS_ID, TODAY_FILTER_ID, THIS_WEEK_FILTER_ID, THIS_MONTH_FILTER_ID, THIS_YEAR_FILTER_ID, Subtask, PROJECT_COLORS } from "@/lib/types";
-import { loadTasks, saveTasks, saveTask as saveOneTask, loadProjects, saveProjects, loadSelectedProjectId, saveSelectedProjectId, deleteTask as removeTaskFromDB, deleteTasks as removeTasksFromDB, deleteProject as removeProjectFromDB } from "@/lib/storage";
+import { Task, Project, Settings, DEFAULT_SETTINGS, DEFAULT_PROJECT, DEFAULT_PROJECT_ID, ALL_PROJECTS_ID, TODAY_FILTER_ID, THIS_WEEK_FILTER_ID, THIS_MONTH_FILTER_ID, THIS_YEAR_FILTER_ID, Subtask, PROJECT_COLORS } from "@/lib/types";
+import { loadTasks, saveTasks, saveTask as saveOneTask, loadProjects, saveProjects, loadSelectedProjectId, saveSelectedProjectId, deleteTask as removeTaskFromDB, deleteTasks as removeTasksFromDB, deleteProject as removeProjectFromDB, loadSettings } from "@/lib/storage";
+import SmartPlan from "@/components/SmartPlan";
 import { TASK_TEMPLATES, templateToTasks } from "@/lib/templates";
 import { useAuth } from "@/components/AuthProvider";
 import { useToast } from "@/components/ToastProvider";
@@ -77,7 +78,8 @@ export default function TaskList({
   const [showArchivedProjects, setShowArchivedProjects] = useState(false);
   const [dragTaskId, setDragTaskId] = useState<string | null>(null);
   const [dragOverTaskId, setDragOverTaskId] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
+  const [viewMode, setViewMode] = useState<"list" | "calendar" | "plan">("list");
+  const [planSettings, setPlanSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const projectMenuRef = useRef<HTMLDivElement>(null);
   const templateMenuRef = useRef<HTMLDivElement>(null);
@@ -677,6 +679,18 @@ export default function TaskList({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </button>
+              <button
+                onClick={() => {
+                  setViewMode("plan");
+                  loadSettings().then(setPlanSettings);
+                }}
+                className={`p-1.5 sm:p-2 rounded-md transition-colors ${viewMode === "plan" ? "bg-white/20 text-white" : "text-white/50 hover:text-white/80"}`}
+                title="Smart Plan"
+              >
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -712,6 +726,16 @@ export default function TaskList({
           </button>
         </div>
       </div>
+
+      {/* Smart Plan view */}
+      {viewMode === "plan" && (
+        <SmartPlan
+          tasks={tasks}
+          projects={projects}
+          settings={planSettings}
+          onStartTask={onStartTask}
+        />
+      )}
 
       {/* Calendar view */}
       {viewMode === "calendar" && (
