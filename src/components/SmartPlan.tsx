@@ -142,7 +142,7 @@ export default function SmartPlan({
   const workDurationMin = Math.round(settings.workDuration / 60_000);
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-4 overflow-hidden min-w-0">
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <div className="bg-slate-50 dark:bg-[#131d30] rounded-xl px-3 py-2.5 text-center">
