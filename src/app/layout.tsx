@@ -8,9 +8,9 @@ import "./globals.css";
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const siteUrl = "https://usefoci.com";
-const title = "Foci – Your Focus System: Timer, Tasks, Goals & Ambient Music";
+const title = "Foci – Your Focus System: Timer, Tasks, Smart Plan & Ambient Music";
 const description =
-  "Foci is a free all-in-one focus system: Pomodoro timer, task tracking, daily goals, streak stats, and built-in ambient music. Everything you need to stay productive, in one window.";
+  "Foci is a free all-in-one focus system: Pomodoro timer, task tracking, Smart Plan scheduling, daily goals, streak stats, and built-in ambient music. Everything you need to stay productive, in one window.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -71,6 +71,14 @@ export const metadata: Metadata = {
     "google tasks alternative",
     "asana alternative for individuals",
     "notion task manager alternative",
+    "smart task scheduler",
+    "task planning tool",
+    "daily task planner",
+    "project color coding",
+    "due date tracker",
+    "task prioritization",
+    "focus analytics",
+    "productivity stats dashboard",
   ],
   authors: [{ name: "Foci" }],
   creator: "Foci",

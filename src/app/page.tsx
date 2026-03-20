@@ -21,7 +21,7 @@ const jsonLd = {
   operatingSystem: "Any",
   browserRequirements: "Requires a modern web browser with JavaScript enabled",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  description: "Foci is a free all-in-one focus system: Pomodoro timer, task tracking, daily goals, streak stats, built-in ambient music, and motivational quotes — everything you need to stay productive, in one window.",
+  description: "Foci is a free all-in-one focus system: Pomodoro timer, task tracking, Smart Plan scheduling, daily goals, streak stats, built-in ambient music, and motivational quotes — everything you need to stay productive, in one window.",
   image: `${siteUrl}/opengraph-image`,
   featureList: [
     "Pomodoro focus timer with customizable work and break durations",
@@ -37,6 +37,9 @@ const jsonLd = {
     "Import tasks from Google Tasks, Todoist, Asana, and Notion",
     "Export tasks as JSON or CSV for backup and migration",
     "Today and This Week smart task filters",
+    "Smart Plan: algorithmic day-by-day task scheduling based on due dates and daily goals",
+    "Project color coding and due date tracking",
+    "Productivity stats dashboard with heatmap, charts, and streak tracking",
   ],
 };
 
@@ -73,6 +76,8 @@ const faqJsonLd = {
     { "@type": "Question", name: "What browsers does Foci support?", acceptedAnswer: { "@type": "Answer", text: "Foci works in all modern browsers including Chrome, Firefox, Safari, and Edge on desktop and mobile." } },
     { "@type": "Question", name: "Does Foci have brown noise?", acceptedAnswer: { "@type": "Answer", text: "Yes. Foci includes a built-in brown noise generator that works completely offline using the Web Audio API. Brown noise is a deep, warm sound that's less harsh than white noise — ideal for long study sessions, deep work, and ADHD focus support. You can also use rain, café, and white noise sounds." } },
     { "@type": "Question", name: "Can I use Foci for deep work?", acceptedAnswer: { "@type": "Answer", text: "Yes. Foci is designed for deep work sessions. Set your timer, pick a task, turn on ambient sounds like brown noise or rain, and focus without distraction. Foci tracks your sessions and daily goals so you can build a consistent deep work habit." } },
+    { "@type": "Question", name: "What is Smart Plan?", acceptedAnswer: { "@type": "Answer", text: "Smart Plan is Foci's built-in task scheduler. It analyzes your tasks, due dates, and daily session goals to generate a day-by-day execution plan. It prioritizes overdue and at-risk tasks, distributes work across days based on your capacity, and shows a clear schedule you can follow. No AI required — it’s a fast, algorithmic approach." } },
+    { "@type": "Question", name: "Can I organize tasks with project colors?", acceptedAnswer: { "@type": "Answer", text: "Yes. Each project in Foci can have a custom color, due date, and description. Color-coded dots appear on project tabs and in task lists for quick visual identification. You can also archive completed projects." } },
   ],
 };
 

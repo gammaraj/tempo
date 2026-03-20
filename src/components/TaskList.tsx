@@ -1144,7 +1144,7 @@ export default function TaskList({
                   className="w-full px-3 py-2 text-sm border border-blue-300 rounded-lg bg-white dark:bg-[#131d30] dark:text-white outline-none resize-y"
                   autoFocus
                 />
-                <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 px-1">Auto-saves when you click outside · ⌘Enter to save</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 px-1">Auto-saves when you click outside · ⌘Enter to save</p>
               </div>
             ) : (
               <button

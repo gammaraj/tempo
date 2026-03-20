@@ -1,10 +1,10 @@
-# Foci – Your Focus System: Timer, Tasks, Goals & Ambient Music
+# Foci – Your Focus System: Timer, Tasks, Smart Plan & Ambient Music
 
-> Foci is a free all-in-one focus system built with Next.js, React, and Tailwind CSS. It combines a Pomodoro timer, task tracking, daily goals, streak stats, built-in ambient music, and motivational quotes into one distraction-free workspace. No sign-up required — works instantly in any modern browser.
+> Foci is a free all-in-one focus system built with Next.js, React, and Tailwind CSS. It combines a Pomodoro timer, task tracking, Smart Plan scheduling, daily goals, streak stats, built-in ambient music, and motivational quotes into one distraction-free workspace. No sign-up required — works instantly in any modern browser.
 
 ## What is Foci?
 
-Foci is more than a Pomodoro timer. It’s a complete focus system designed for students, developers, writers, and anyone who wants to get more done. Timer. Tasks. Goals. Streaks. Ambient music to stay in the zone — everything you need to focus, in one window. Foci is completely free and requires no account to get started.
+Foci is more than a Pomodoro timer. It's a complete focus system designed for students, developers, writers, and anyone who wants to get more done. Timer. Tasks. Smart Plan. Goals. Streaks. Ambient music to stay in the zone — everything you need to focus, in one window. Foci is completely free and requires no account to get started.
 
 ## Key Features
 
@@ -23,6 +23,9 @@ Foci is more than a Pomodoro timer. It’s a complete focus system designed for 
 - **Data Privacy**: All data is stored locally by default. No tracking, no ads.
 - **Task Import & Export**: Import tasks from Google Tasks (JSON), Todoist (CSV), Asana (CSV), Notion (CSV), or any CSV file. Export your tasks as JSON or CSV for backup or migration.
 - **Smart Filters**: Filter tasks by Today (due today or overdue) or This Week (due within the current week) for quick prioritization.
+- **Smart Plan**: Algorithmic day-by-day task scheduler. Analyzes tasks, due dates, and daily session goals to generate an execution plan. Flags overdue and at-risk items. No AI required.
+- **Project Metadata**: Assign colors, due dates, and descriptions to projects. Archive completed projects. Color-coded dots for visual organization.
+- **Productivity Stats**: Dashboard with session heatmap, per-project charts, streak history, and daily/weekly/monthly analytics.
 
 ## How to Use Foci
 
@@ -64,6 +67,12 @@ A: Yes. Foci supports importing tasks from Google Tasks (JSON), Todoist (CSV), A
 
 **Q: Can I export my tasks from Foci?**
 A: Yes. Export all your tasks as JSON (for re-importing into Foci) or CSV (for spreadsheets or other apps) from the Settings panel under Import & Export Tasks.
+
+**Q: What is Smart Plan?**
+A: Smart Plan is Foci's built-in task scheduler. It analyzes your tasks, due dates, and daily session goals to generate a day-by-day execution plan. It prioritizes overdue and at-risk tasks, distributes work across days based on your capacity, and shows a clear schedule you can follow. No AI required — it's a fast, algorithmic approach.
+
+**Q: Can I organize tasks with project colors?**
+A: Yes. Each project in Foci can have a custom color, due date, and description. Color-coded dots appear on project tabs and in task lists for quick visual identification. You can also archive completed projects.
 
 **Q: Does Foci have brown noise?**
 A: Yes. Foci includes a built-in brown noise generator that works completely offline using the Web Audio API. Brown noise is a deep, warm sound that's less harsh than white noise — ideal for long study sessions, deep work, and ADHD focus support.
@@ -112,7 +121,9 @@ Unlike most standalone Pomodoro timers, Foci integrates task tracking, ambient m
 - `src/components/TimerControls.tsx` – Start, pause, and reset buttons.
 - `src/components/DailyProgress.tsx` – Daily goal progress bar and streak display.
 - `src/components/SettingsPanel.tsx` – Settings modal for durations, goals, notifications, and task import/export.
-- `src/components/TaskList.tsx` – Task creation, listing, time tracking, Today/This Week filters.
+- `src/components/TaskList.tsx` – Task creation, listing, time tracking, Today/This Week filters, Smart Plan view.
+- `src/lib/smartplan.ts` – Smart Plan scoring algorithm and day-by-day task distribution engine.
+- `src/components/SmartPlan.tsx` – Smart Plan UI with summary cards, day sections, and task rows.
 - `src/components/TaskImportExport.tsx` – Import tasks from Google Tasks, Todoist, Asana, Notion, CSV. Export as JSON/CSV.
 - `src/hooks/useTimer.ts` – Core timer logic hook (work/break cycles, callbacks).
 - `src/lib/types.ts` – TypeScript type definitions (Settings, Task, TimerStatus, etc.).
@@ -124,6 +135,7 @@ Unlike most standalone Pomodoro timers, Foci integrates task tracking, ambient m
 
 - Homepage: https://usefoci.com
 - App: https://usefoci.com/app
+- Stats: https://usefoci.com/stats
 - Blog: https://usefoci.com/blog
 - Login: https://usefoci.com/login
 
@@ -552,3 +564,64 @@ Notion is incredibly flexible but its complexity can get in the way of actually 
 4. Preview and import
 
 Relations, rollups, formulas, and multi-select tags don't transfer. Foci's model is intentionally simpler — fewer fields between you and a focus session.
+
+---
+
+### Brown Noise for Studying: Why It Works and How to Use It
+
+> URL: https://usefoci.com/blog/brown-noise-for-studying-and-focus
+> Date: 2026-03-12 | Reading time: 6 min read
+> Tags: brown noise, studying, focus, ambient sounds, productivity
+
+Brown noise has gone from niche audio curiosity to mainstream focus tool. Search interest has exploded over the past two years, with millions of students and remote workers swearing it helps them concentrate. But does it actually work — and how is it different from white noise?
+
+#### What is brown noise?
+
+Brown noise (also called Brownian noise or red noise) is a deep, rumbling sound — like a strong waterfall, heavy rain on a roof, or distant thunder. It emphasizes lower frequencies much more than white noise, producing a warm, smooth texture that many people find deeply calming.
+
+#### Why brown noise helps you focus
+
+1. **It masks distracting sounds** — provides a consistent sound floor that smooths out unpredictable background noises.
+2. **It's less harsh than white noise** — rolls off high frequencies, creating a warmer, more comfortable experience for long sessions.
+3. **It may reduce anxiety** — low-frequency ambient sound has been linked to reduced physiological stress markers.
+4. **It creates a consistent environment** — your brain habituates to constant stimuli and can ignore it while blocking sudden distractions.
+
+#### Brown noise for ADHD
+
+Many people with ADHD report brown noise helps with reducing sensory overwhelm, providing just enough stimulation to prevent restlessness, and making it easier to start tasks by creating a clear "work mode" signal.
+
+#### Try it in Foci
+
+Foci has brown noise built directly into the timer — no extra tabs, no ads. Open the ambient sounds section, tap Brown Noise, and start a focus session. Sounds are generated locally via Web Audio API and work completely offline.
+
+---
+
+### Deep Work in the Age of AI: How to Stay Focused When Everything Is Instant
+
+> URL: https://usefoci.com/blog/deep-work-in-the-age-of-ai
+> Date: 2026-03-15 | Reading time: 7 min read
+> Tags: deep work, AI, focus, productivity, distraction
+
+AI has made knowledge work faster than ever. But there's an uncomfortable side effect: the faster everything gets, the harder it becomes to sit with one task and think deeply about it.
+
+#### The new distraction isn't social media — it's productivity itself
+
+AI tools feel like work, but using them constantly creates rapid context-switching. Deep work (sustained attention on one problem) and AI-assisted work (fast, reactive thinking) are fundamentally different cognitive modes. Both have value, but the fast mode can crowd out the slow mode.
+
+#### Why deep work still matters
+
+With AI handling routine cognitive tasks, the premium on deep thinking has increased. Original analysis, complex debugging, strategic thinking, creative work, and true learning all require sustained focus that AI can't replicate.
+
+#### 5 strategies for protecting deep work
+
+1. **Batch your AI usage** — collect questions during focus time, handle them during breaks.
+2. **Set a timer and commit to single-tasking** — no tool-switching during focus sessions.
+3. **Do the hard thinking before you ask AI** — struggle first, then verify with AI.
+4. **Create a "deep work" environment** — close AI tabs, use ambient sound, block distractions.
+5. **Track your deep work hours** — measure focused sessions to build awareness and motivation.
+
+#### The AI + deep work sandwich
+
+Use AI before and after focus sessions (gather context, refine output), but not during. This gives you the speed benefits of AI without sacrificing sustained depth.
+
+Foci is designed for exactly this workflow — set your timer, pick your task, start ambient sounds, and let the timer hold you accountable.
